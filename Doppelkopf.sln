@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppelkopf.Core", "Doppelkopf.Core\Doppelkopf.Core.csproj", "{898F0364-FA30-4A06-9BDB-0526C3B26989}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{898F0364-FA30-4A06-9BDB-0526C3B26989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898F0364-FA30-4A06-9BDB-0526C3B26989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898F0364-FA30-4A06-9BDB-0526C3B26989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898F0364-FA30-4A06-9BDB-0526C3B26989}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
