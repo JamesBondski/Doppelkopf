@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Doppelkopf.Core {
     public class Player {
-        CardStack hand = new CardStack();
+
+        public string Name {
+            get; set;
+        }
 
         public CardStack Hand {
-            get { return hand; }
+            get; set;
+        }
+
+        public Player() {
+            this.Hand = new CardStack();
         }
     }
 }

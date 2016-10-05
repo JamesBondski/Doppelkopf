@@ -7,7 +7,7 @@ namespace Doppelkopf.Test {
     public class CardStackTest {
         private const int runs = 1000000;
         private const int mean = runs / 3;
-        private const int allowedDeviation = (int)(mean * 0.1);
+        private const int allowedDeviation = (int)(mean * 0.2);
 
         [TestMethod]
         public void Shuffle() {
