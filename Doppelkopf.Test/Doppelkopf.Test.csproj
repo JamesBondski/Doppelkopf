@@ -57,6 +57,7 @@
     <Compile Include="DeckBuilderTest.cs" />
     <Compile Include="CardStackTest.cs" />
     <Compile Include="GameTest.cs" />
+    <Compile Include="TrickTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Doppelkopf.Core\Doppelkopf.Core.csproj">

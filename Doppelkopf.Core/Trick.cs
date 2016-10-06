@@ -13,6 +13,10 @@ namespace Doppelkopf.Core
             get; set;
         }
 
+        public IReadOnlyList<Tuple<Player, Card>> Played {
+            get { return PlayedCards.AsReadOnly(); }
+        }
+
         public Trick() {
             this.PlayedCards = new List<Tuple<Player, Card>>();
         }

@@ -51,9 +51,9 @@ namespace Doppelkopf.Core {
             if(this.Stack != null) {
                 this.Stack.RemoveCard(this);
             }
-
+            
+            stack.AddCard(this, this.Stack);
             this.Stack = stack;
-            this.Stack.AddCard(this);
         }
     }
 }

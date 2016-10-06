@@ -30,7 +30,16 @@ namespace Doppelkopf.Core {
             }
         }
 
-        public void PlayTrick(Player startPlayer) {
+        public Trick PlayTrick(Player startPlayer) { 
+            Queue<Player> trickQueue = new Queue<Player>();
+            Trick trick = new Trick();
+            for(int i=this.Players.IndexOf(startPlayer); i<4; i++) {
+                this.Players[i].Play(trick);
+            }
+            for (int i = 0; i<this.Players.IndexOf(startPlayer); i++) {
+                this.Players[i].Play(trick);
+            }
+            return trick;
         }
     }
 }
