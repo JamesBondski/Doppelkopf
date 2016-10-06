@@ -13,7 +13,7 @@ namespace Doppelkopf.Test
             Player player1 = new Player();
             Card card1 = new Card(Rank.Ace, Suit.Clubs);
             Player player2 = new Player();
-            Card card2 = new Card(Rank.Eight, Suit.Diamonds);
+            Card card2 = new Card(Rank.Ten, Suit.Diamonds);
 
             Assert.AreEqual(0, trick.Played.Count);
 

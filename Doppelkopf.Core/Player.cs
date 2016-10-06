@@ -11,12 +11,12 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
-        public CardStack Hand {
+        public Hand Hand {
             get; set;
         }
 
         public Player() {
-            this.Hand = new CardStack() { Owner = this };
+            this.Hand = new Hand() { Owner = this };
         }
 
         public void Play(Trick trick) {

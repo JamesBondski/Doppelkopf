@@ -16,9 +16,9 @@ namespace Doppelkopf.Test {
 
             for(int i=0; i<runs; i++) {
                 CardStack testStack = new CardStack();
-                new Card(Rank.Two, Suit.Clubs).MoveTo(testStack);
-                new Card(Rank.Three, Suit.Clubs).MoveTo(testStack);
-                new Card(Rank.Four, Suit.Clubs).MoveTo(testStack);
+                new Card(Rank.Nine, Suit.Clubs).MoveTo(testStack);
+                new Card(Rank.Ten, Suit.Clubs).MoveTo(testStack);
+                new Card(Rank.Jack, Suit.Clubs).MoveTo(testStack);
 
                 testStack.Shuffle();
                 for(int ci = 0; ci<3; ci++) {

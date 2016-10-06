@@ -14,13 +14,6 @@ namespace Doppelkopf.Core {
     }
 
     public enum Rank {
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Eight,
         Nine,
         Ten,
         Jack,
@@ -40,6 +33,21 @@ namespace Doppelkopf.Core {
 
         public CardStack Stack {
             get; set;
+        }
+
+        public bool IsTrump {
+            get {
+                if(this.Suit == Suit.Diamonds) {
+                    return true;
+                }
+                if(this.Rank == Rank.Queen || this.Rank == Rank.Jack) {
+                    return true;
+                }
+                if(this.Rank == Rank.Ten && this.Suit == Suit.Hearts) {
+                    return true;
+                }
+                return false;
+            }
         }
 
         public Card(Rank rank, Suit suit) {
