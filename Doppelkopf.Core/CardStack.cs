@@ -8,10 +8,10 @@ namespace Doppelkopf.Core {
     public class CardStack {
         List<Card> cards = new List<Card>();
 
-        internal List<Card> CardsInternal {
-            get { return cards; }
+        public Player Owner {
+            get; set;
         }
-
+        
         public IReadOnlyList<Card> Cards {
             get { return cards.AsReadOnly(); }
         }
@@ -26,6 +26,14 @@ namespace Doppelkopf.Core {
                 cards.Remove(randomCard);
             }
             cards = shuffledCards;
+        }
+
+        internal protected virtual void AddCard(Card card, CardStack previousStack = null) {
+            cards.Add(card);
+        }
+
+        internal protected virtual void RemoveCard(Card card) {
+            cards.Remove(card);
         }
     }
 }

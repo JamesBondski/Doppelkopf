@@ -49,11 +49,11 @@ namespace Doppelkopf.Core {
 
         public void MoveTo(CardStack stack) {
             if(this.Stack != null) {
-                this.Stack.CardsInternal.Remove(this);
+                this.Stack.RemoveCard(this);
             }
 
             this.Stack = stack;
-            this.Stack.CardsInternal.Add(this);
+            this.Stack.AddCard(this);
         }
     }
 }

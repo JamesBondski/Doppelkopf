@@ -29,5 +29,8 @@ namespace Doppelkopf.Core {
                 }
             }
         }
+
+        public void PlayTrick(Player startPlayer) {
+        }
     }
 }

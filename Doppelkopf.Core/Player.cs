@@ -16,7 +16,11 @@ namespace Doppelkopf.Core {
         }
 
         public Player() {
-            this.Hand = new CardStack();
+            this.Hand = new CardStack() { Owner = this };
+        }
+
+        public void PlayTrick(Trick trick) {
+            Hand.Cards[0].MoveTo(trick);
         }
     }
 }
