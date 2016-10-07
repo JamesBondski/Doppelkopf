@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace Doppelkopf.Core {
     public class Player {
 
+        IPlayerActor Actor {
+            get; set;
+        }
+
         public string Name {
             get; set;
         }
@@ -17,10 +21,11 @@ namespace Doppelkopf.Core {
 
         public Player() {
             this.Hand = new Hand() { Owner = this };
+            this.Actor = new DefaultPlayerActor() { Player = this };
         }
 
         public void Play(Trick trick) {
-            Hand.GetPlayableCards(trick).First().MoveTo(trick);
+            this.Actor.GetCardForTrick(trick).MoveTo(trick);
         }
     }
 }
