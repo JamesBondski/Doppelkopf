@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Doppelkopf.Core
 {
-    interface IPlayerActor
+    public interface IPlayerActor
     {
         Player Player {
             get; set;

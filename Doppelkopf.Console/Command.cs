@@ -79,4 +79,19 @@ namespace Doppelkopf.Console
             System.Console.WriteLine();
         }
     }
+
+    public class ControlPlayerCommand : Command
+    {
+        public override string Keyword {
+            get {
+                return "control";
+            }
+        }
+
+        public override void Execute(State state, string args) {
+            Player controlledPlayer = state.Game.Players.First(player => player.Name == args);
+            controlledPlayer.Actor = new ConsolePlayerActor() { Player = controlledPlayer };
+            System.Console.WriteLine("Controlling " + controlledPlayer.Name);
+        }
+    }
 }

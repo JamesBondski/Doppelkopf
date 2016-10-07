@@ -21,6 +21,7 @@ namespace Doppelkopf.Console
             AddCommand(new ShowHandsCommand());
             AddCommand(new QuitCommand());
             AddCommand(new PlayTrickCommand());
+            AddCommand(new ControlPlayerCommand());
 
             while(!state.DoQuit) {
                 System.Console.Write("? ");
@@ -28,7 +29,7 @@ namespace Doppelkopf.Console
                 string[] parts = command.Split(' ');
 
                 if(commands.ContainsKey(parts[0])) {
-                    string arg = parts.Length > 1 ? parts[1] : null;
+                    string arg = parts.Length > 1 ? command.Substring(parts[1].Length+2) : null;
                     commands[parts[0]].Execute(state, arg);
                 }
                 else {
