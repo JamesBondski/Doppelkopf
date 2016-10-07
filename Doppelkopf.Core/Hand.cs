@@ -13,8 +13,8 @@ namespace Doppelkopf.Core
                 return this.Cards;
             }
 
-            //Cards from same suit
-            var cardsSameSuit = this.Cards.Where(card => card.Suit == trick.Cards[0].Suit);
+            //Cards with same CardType
+            var cardsSameSuit = this.Cards.Where(card => card.CardType == trick.Cards[0].CardType);
             if(cardsSameSuit.Count() > 0) {
                 return cardsSameSuit;
             }

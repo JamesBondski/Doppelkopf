@@ -20,7 +20,7 @@ namespace Doppelkopf.Core {
         }
 
         public void Play(Trick trick) {
-            Hand.Cards[0].MoveTo(trick);
+            Hand.GetPlayableCards(trick).First().MoveTo(trick);
         }
     }
 }
