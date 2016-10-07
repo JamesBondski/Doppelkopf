@@ -83,11 +83,10 @@ namespace Doppelkopf.Core
         }
 
         public void MoveTo(CardStack stack) {
+            stack.AddCard(this, this.Stack);
             if (this.Stack != null) {
                 this.Stack.RemoveCard(this);
             }
-
-            stack.AddCard(this, this.Stack);
             this.Stack = stack;
         }
     }

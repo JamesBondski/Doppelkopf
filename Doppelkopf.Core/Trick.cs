@@ -26,8 +26,24 @@ namespace Doppelkopf.Core
             Trace.Assert(previousStack != null, "Card added to trick must come from a CardStack");
             Trace.Assert(previousStack.Owner != null, "Card added to trick must come from an owned CardStack.");
 
+            //Check if this card was playable
+            if(!previousStack.Owner.Hand.GetPlayableCards(this).Contains(card)) {
+                throw new InvalidCardPlayedException("Card does not match suit.");
+            }
+
             PlayedCards.Add(new Tuple<Player, Card>(previousStack.Owner, card));
             base.AddCard(card);
         }
+    }
+
+    [Serializable]
+    public class InvalidCardPlayedException : Exception
+    {
+        public InvalidCardPlayedException() { }
+        public InvalidCardPlayedException(string message) : base(message) { }
+        public InvalidCardPlayedException(string message, Exception inner) : base(message, inner) { }
+        protected InvalidCardPlayedException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
