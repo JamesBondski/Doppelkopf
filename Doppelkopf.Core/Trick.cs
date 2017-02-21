@@ -21,6 +21,21 @@ namespace Doppelkopf.Core
             this.PlayedCards = new List<Tuple<Player, Card>>();
         }
 
+        public Player GetWinner() {
+            if(PlayedCards.Count != 4) {
+                throw new TrickNotCompleteException("A trick must always contain 4 cards.");
+            }
+
+            Tuple<Player, Card> currentWinner = null;
+            foreach(Tuple<Player, Card> played in this.Played) {
+                if(currentWinner == null || played.Item2.CompareCardTo(currentWinner.Item2) > 0) {
+                    currentWinner = played;
+                }
+            }
+
+            return currentWinner.Item1;
+        }
+
         protected internal override void AddCard(Card card, CardStack previousStack = null) {
             //We know this card must come from the hand of a player
             Trace.Assert(previousStack != null, "Card added to trick must come from a CardStack");
@@ -43,6 +58,18 @@ namespace Doppelkopf.Core
         public InvalidCardPlayedException(string message) : base(message) { }
         public InvalidCardPlayedException(string message, Exception inner) : base(message, inner) { }
         protected InvalidCardPlayedException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+
+    [Serializable]
+    public class TrickNotCompleteException : Exception
+    {
+        public TrickNotCompleteException() { }
+        public TrickNotCompleteException(string message) : base(message) { }
+        public TrickNotCompleteException(string message, Exception inner) : base(message, inner) { }
+        protected TrickNotCompleteException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

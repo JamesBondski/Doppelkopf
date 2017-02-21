@@ -11,7 +11,7 @@ namespace Doppelkopf.Core {
             for (int i = 1; i <= 2; i++) {
                 foreach (var suit in Enum.GetValues(typeof(Suit))) {
                     foreach (var rank in Enum.GetValues(typeof(Rank))) {
-                        if ((Rank)rank >= Rank.Ten) {
+                        if ((Rank)rank > Rank.Nine) {
                             Card card = new Card((Rank)rank, (Suit)suit);
                             card.MoveTo(deck);
                         }

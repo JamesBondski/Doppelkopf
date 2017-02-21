@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Doppelkopf.Core;
+using System.Collections.Generic;
 
 namespace Doppelkopf.Test
 {
@@ -32,6 +33,11 @@ namespace Doppelkopf.Test
             Assert.AreSame(card1, trick.Played[0].Item2);
             Assert.AreSame(player2, trick.Played[1].Item1);
             Assert.AreSame(card2, trick.Played[1].Item2);
+        }
+
+        [TestMethod]
+        public void GetWinner() {
+            throw new NotImplementedException();
         }
     }
 }
