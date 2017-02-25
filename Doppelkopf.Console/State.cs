@@ -13,13 +13,17 @@ namespace Doppelkopf.Console
             get; set;
         }
 
+        public Round Round {
+            get; set;
+        }
+
         public bool DoQuit {
             get; set;
         }
 
         public State() {
             this.Game = new Game();
-            this.Game.Deal();
+            this.Round = this.Game.NewRound();
             this.DoQuit = false;
         }
     }

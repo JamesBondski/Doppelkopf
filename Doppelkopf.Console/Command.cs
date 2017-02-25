@@ -26,7 +26,7 @@ namespace Doppelkopf.Console
 
         public override void Execute(State state, string args) {
             state.Game = new Game();
-            state.Game.Deal();
+            state.Round = state.Game.NewRound();
             System.Console.WriteLine("New game started.");
         }
     }
@@ -72,7 +72,7 @@ namespace Doppelkopf.Console
         }
 
         public override void Execute(State state, string args) {
-            Trick trick = state.Game.PlayTrick(state.Game.Players[0]);
+            Trick trick = state.Round.PlayTrick(state.Game.Players[0]);
             foreach(Tuple<Player,Card> playedCard in trick.Played) {
                 System.Console.Write(playedCard.Item1.Name + "->" + playedCard.Item2.Symbol + ", ");
             }
