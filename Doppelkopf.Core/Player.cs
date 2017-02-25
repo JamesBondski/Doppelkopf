@@ -19,7 +19,8 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
-        public Player() {
+        public Player(string name = null) {
+            this.Name = name;
             this.Hand = new Hand() { Owner = this };
             this.Actor = new DefaultPlayerActor() { Player = this };
         }

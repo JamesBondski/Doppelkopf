@@ -36,6 +36,22 @@ namespace Doppelkopf.Core
 
     public class Card
     {
+        static readonly Dictionary<string, Rank> RankMap = new Dictionary<string, Rank>() {
+            ["N"] = Rank.Nine,
+            ["T"] = Rank.Ten,
+            ["J"] = Rank.Jack,
+            ["Q"] = Rank.Queen,
+            ["K"] = Rank.King,
+            ["A"] = Rank.Ace
+        };
+
+        static readonly Dictionary<string, Suit> SuitMap = new Dictionary<string, Suit>() {
+            ["D"] = Suit.Diamonds,
+            ["H"] = Suit.Hearts,
+            ["S"] = Suit.Spades,
+            ["C"] = Suit.Clubs
+        };
+
         public Suit Suit {
             get; set;
         }
@@ -102,6 +118,15 @@ namespace Doppelkopf.Core
         public Card(Rank rank, Suit suit) {
             this.Suit = suit;
             this.Rank = rank;
+        }
+
+        public Card(string code) {
+            if(code.Length != 2 || !SuitMap.ContainsKey(code[0].ToString()) || ! RankMap.ContainsKey(code[1].ToString())) {
+                throw new ArgumentException("Invalid card code: " + code);
+            }
+
+            this.Suit = SuitMap[code[0].ToString()];
+            this.Rank = RankMap[code[1].ToString()];
         }
 
         public void MoveTo(CardStack stack) {

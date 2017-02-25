@@ -35,9 +35,48 @@ namespace Doppelkopf.Test
             Assert.AreSame(card2, trick.Played[1].Item2);
         }
 
+        private Trick CreateTrick(string cards) {
+            string[] cardCodes = cards.Split(' ');
+
+            Trick trick = new Trick();
+            int index = 0;
+            foreach(string cardCode in cardCodes) {
+                Card card = new Card(cardCode);
+                card.MoveTo(new Player("Player "+(index+1)).Hand);
+                card.MoveTo(trick);
+
+                index++;
+            }
+            return trick;
+        }
+
         [TestMethod]
-        public void GetWinner() {
-            throw new NotImplementedException();
+        [ExpectedException(typeof(TrickNotCompleteException))]
+        public void GetWinner_TooFewCards() {
+            //Ungültig weil nur drei Karten
+            Player winner = CreateTrick("HT HT DQ").GetWinner();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TrickNotCompleteException))]
+        public void GetWinner_TooManyCards() {
+            //Ungültig weil nur drei Karten
+            Player winner = CreateTrick("HT HT DQ HQ SQ").GetWinner();
+        }
+
+        [TestMethod]
+        public void GetWinner_Positions() {
+            Assert.AreEqual("Player 1", CreateTrick("SA ST SK SK").GetWinner().Name);
+            Assert.AreEqual("Player 2", CreateTrick("ST SA SK SK").GetWinner().Name);
+            Assert.AreEqual("Player 3", CreateTrick("ST SK SA SK").GetWinner().Name);
+            Assert.AreEqual("Player 4", CreateTrick("ST SK SK SA").GetWinner().Name);
+        }
+
+        [TestMethod]
+        public void GetWinner_Trump() {
+            Assert.AreEqual("Player 2", CreateTrick("SA DA SK SK").GetWinner().Name);
+            Assert.AreEqual("Player 3", CreateTrick("SA DA DJ SK").GetWinner().Name);
+            Assert.AreEqual("Player 3", CreateTrick("DA DJ DQ SJ").GetWinner().Name);
         }
     }
 }
