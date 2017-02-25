@@ -32,6 +32,7 @@ namespace Doppelkopf.Client
         /// </summary>
         protected override void Initialize() {
             game = new Runner();
+            this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -77,8 +78,9 @@ namespace Doppelkopf.Client
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             int count = 0;
+            int startPoint = (int)((GraphicsDevice.Viewport.Width - this.game.Actor.Cards.Count * 520 * cardRender.Scale) / 2);
             foreach(Card card in this.game.Actor.Cards) {
-                cardRender.Draw(card, spriteBatch, new Point((int)(count * 520 * cardRender.Scale), 10));
+                cardRender.Draw(card, spriteBatch, new Point(startPoint + (int)(count * 520 * cardRender.Scale), (int)(GraphicsDevice.Viewport.Height - (720 * cardRender.Scale) - 10)));
                 count++;
             }
             spriteBatch.End();
