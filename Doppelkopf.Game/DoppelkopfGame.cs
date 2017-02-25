@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Doppelkopf.Client.GameRunner;
+using Doppelkopf.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Doppelkopf.Game
+namespace Doppelkopf.Client
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,6 +13,8 @@ namespace Doppelkopf.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        CardRenderer cardRender;
+        Runner game;
 
         public DoppelkopfGame() {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +31,7 @@ namespace Doppelkopf.Game
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            // TODO: Add your initialization logic here
+            game = new Runner();
 
             base.Initialize();
         }
@@ -39,6 +43,8 @@ namespace Doppelkopf.Game
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            cardRender = new CardRenderer(Content);
+            cardRender.Scale = 0.2f;
         }
 
         /// <summary>
@@ -69,7 +75,13 @@ namespace Doppelkopf.Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin();
+            int count = 0;
+            foreach(Card card in this.game.Actor.Cards) {
+                cardRender.Draw(card, spriteBatch, new Point((int)(count * 520 * cardRender.Scale), 10));
+                count++;
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

@@ -14,7 +14,7 @@ namespace Doppelkopf.Test
         [TestInitialize]
         public void Setup() {
             game = new Game();
-            round = game.NewRound();
+            round = game.CurrentRound;
         }
 
         [TestMethod]

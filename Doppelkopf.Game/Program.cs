@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Doppelkopf.Game
+namespace Doppelkopf.Client
 {
     /// <summary>
     /// The main class.

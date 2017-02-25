@@ -9,7 +9,7 @@
     <ProjectGuid>{54C3B83F-7B33-4252-8E8B-05A5F2841E79}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Doppelkopf.Game</RootNamespace>
+    <RootNamespace>Doppelkopf.Client</RootNamespace>
     <AssemblyName>Doppelkopf.Game</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
@@ -39,7 +39,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CardRenderer.cs" />
     <Compile Include="DoppelkopfGame.cs" />
+    <Compile Include="GameRunner\ClientActor.cs" />
+    <Compile Include="GameRunner\Runner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

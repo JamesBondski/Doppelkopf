@@ -26,7 +26,6 @@ namespace Doppelkopf.Console
 
         public override void Execute(State state, string args) {
             state.Game = new Game();
-            state.Round = state.Game.NewRound();
             System.Console.WriteLine("New game started.");
         }
     }

@@ -23,7 +23,7 @@ namespace Doppelkopf.Console
 
         public State() {
             this.Game = new Game();
-            this.Round = this.Game.NewRound();
+            this.Round = this.Game.CurrentRound;
             this.DoQuit = false;
         }
     }

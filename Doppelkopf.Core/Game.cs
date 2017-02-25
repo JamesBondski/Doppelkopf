@@ -12,15 +12,21 @@ namespace Doppelkopf.Core
             get;
         }
 
+        public Round CurrentRound {
+            get;
+        }
+
         public Game() {
             this.Players = new List<Player>();
             for (int i = 0; i < 4; i++) {
                 this.Players.Add(new Player() { Name = "Player " + i });
             }
+
+            this.CurrentRound = new Core.Round(this);
         }
 
-        public Round NewRound() {
-            return new Round(this);
+        public void Play() {
+            CurrentRound.Play();
         }
     }
 }

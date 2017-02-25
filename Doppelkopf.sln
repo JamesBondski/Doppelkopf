@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppelkopf.Test", "Doppelko
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppelkopf.Console", "Doppelkopf.Console\Doppelkopf.Console.csproj", "{C399C05B-F081-4B6D-9B5D-8FC8588164EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppelkopf.Game", "Doppelkopf.Game\Doppelkopf.Game.csproj", "{54C3B83F-7B33-4252-8E8B-05A5F2841E79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppelkopf.Client", "Doppelkopf.Game\Doppelkopf.Client.csproj", "{54C3B83F-7B33-4252-8E8B-05A5F2841E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
