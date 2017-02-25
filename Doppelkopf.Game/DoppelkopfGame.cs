@@ -1,4 +1,5 @@
-﻿using Doppelkopf.Client.GameRunner;
+﻿using System;
+using Doppelkopf.Client.GameRunner;
 using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,9 +33,15 @@ namespace Doppelkopf.Client
         /// </summary>
         protected override void Initialize() {
             game = new Runner();
+            game.Start();
             this.IsMouseVisible = true;
 
             base.Initialize();
+        }
+
+        protected override void OnExiting(object sender, EventArgs args) {
+            game.Stop();
+            base.OnExiting(sender, args);
         }
 
         /// <summary>
@@ -78,9 +85,9 @@ namespace Doppelkopf.Client
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             int count = 0;
-            int startPoint = (int)((GraphicsDevice.Viewport.Width - this.game.Actor.Cards.Count * 520 * cardRender.Scale) / 2);
+            int startPoint = (int)((GraphicsDevice.Viewport.Width - this.game.Actor.Cards.Count * (cardRender.CardSize.X + 20) * cardRender.Scale) / 2);
             foreach(Card card in this.game.Actor.Cards) {
-                cardRender.Draw(card, spriteBatch, new Point(startPoint + (int)(count * 520 * cardRender.Scale), (int)(GraphicsDevice.Viewport.Height - (720 * cardRender.Scale) - 10)));
+                cardRender.Draw(card, spriteBatch, new Point(startPoint + (int)(count * (cardRender.CardSize.X + 20) * cardRender.Scale), (int)(GraphicsDevice.Viewport.Height - (720 * cardRender.Scale) - 10)));
                 count++;
             }
             spriteBatch.End();

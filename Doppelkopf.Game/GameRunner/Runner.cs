@@ -41,6 +41,10 @@ namespace Doppelkopf.Client.GameRunner
             this.dokoThread.Start();
         }
 
+        public void Stop() {
+            this.dokoThread.Abort();
+        }
+
         private void Run() {
             this.Game.Play();
         }

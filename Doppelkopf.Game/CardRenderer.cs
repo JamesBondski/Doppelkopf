@@ -20,6 +20,10 @@ namespace Doppelkopf.Client
         string[] rankNames = "9,10,jack,queen,king,ace".Split(',');
         string[] suitNames = "diamonds,hearts,spades,clubs".Split(',');
 
+        public Point CardSize {
+            get;
+        }
+
         public float Scale {
             get; set;
         } = 1;
@@ -30,6 +34,7 @@ namespace Doppelkopf.Client
                     cardGraphics[suits[suitIndex] + ranks[rankIndex]] = content.Load<Texture2D>("Cards\\"+rankNames[rankIndex]+"_of_"+suitNames[suitIndex]);
                 }
             }
+            this.CardSize = new Point(cardGraphics.First().Value.Width, cardGraphics.First().Value.Height);
         }
 
         public void Draw(Card card, SpriteBatch batch, Point target) {
