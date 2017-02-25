@@ -25,13 +25,15 @@ namespace Doppelkopf.Test
 
         [TestMethod]
         public void PlayTrickTest() {
-            Trick trick = round.PlayTrick(round.Players[1]);
+            Trick trick = round.PlayTrick();
 
             Assert.AreEqual(4, trick.Played.Count);
-            Assert.AreSame(round.Players[1], trick.Played[0].Item1);
-            Assert.AreSame(round.Players[2], trick.Played[1].Item1);
-            Assert.AreSame(round.Players[3], trick.Played[2].Item1);
-            Assert.AreSame(round.Players[0], trick.Played[3].Item1);
+            Assert.AreSame(round.Players[0], trick.Played[0].Item1);
+            Assert.AreSame(round.Players[1], trick.Played[1].Item1);
+            Assert.AreSame(round.Players[2], trick.Played[2].Item1);
+            Assert.AreSame(round.Players[3], trick.Played[3].Item1);
+
+            Assert.AreSame(trick.GetWinner(), round.StartPlayer);
         }
     }
 }

@@ -15,10 +15,15 @@ namespace Doppelkopf.Core {
             get;
         }
 
-        public Round(Game game) {
+        public Player StartPlayer {
+            get; set;
+        }
+
+        public Round(Game game, Player startPlayer = null) {
             this.Game = game;
             this.deck = DeckBuilder.GetDoppelkopfDeck();
             this.Players = this.Game.Players;
+            this.StartPlayer = startPlayer != null ? startPlayer : this.Players[0];
 
             this.Deal();
         }
@@ -32,15 +37,16 @@ namespace Doppelkopf.Core {
             }
         }
 
-        public Trick PlayTrick(Player startPlayer) { 
+        public Trick PlayTrick() { 
             Queue<Player> trickQueue = new Queue<Player>();
             Trick trick = new Trick();
-            for(int i=this.Players.IndexOf(startPlayer); i<4; i++) {
+            for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
                 this.Players[i].Play(trick);
             }
-            for (int i = 0; i<this.Players.IndexOf(startPlayer); i++) {
+            for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
                 this.Players[i].Play(trick);
             }
+            this.StartPlayer = trick.GetWinner();
             return trick;
         }
     }
