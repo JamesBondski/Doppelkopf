@@ -19,6 +19,12 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
+        public bool IsRunning {
+            get {
+                return this.Players[0].Hand.Cards.Count() == 0;
+            }
+        }
+
         public Round(Game game, Player startPlayer = null) {
             this.Game = game;
             this.deck = DeckBuilder.GetDoppelkopfDeck();
@@ -28,7 +34,7 @@ namespace Doppelkopf.Core {
             this.Deal();
         }
 
-        public void Deal() {
+        private void Deal() {
             this.deck.Shuffle();
             while(this.deck.Cards.Count > 0) {
                 foreach(Player player in this.Players) {
@@ -37,7 +43,11 @@ namespace Doppelkopf.Core {
             }
         }
 
-        public Trick PlayTrick() { 
+        public Trick PlayTrick() {
+            if(!this.IsRunning) {
+                throw new RoundFinishedException();
+            }
+
             Queue<Player> trickQueue = new Queue<Player>();
             Trick trick = new Trick();
             for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
@@ -49,5 +59,17 @@ namespace Doppelkopf.Core {
             this.StartPlayer = trick.GetWinner();
             return trick;
         }
+    }
+
+
+    [Serializable]
+    public class RoundFinishedException : Exception
+    {
+        public RoundFinishedException() { }
+        public RoundFinishedException(string message) : base(message) { }
+        public RoundFinishedException(string message, Exception inner) : base(message, inner) { }
+        protected RoundFinishedException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }

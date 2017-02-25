@@ -35,5 +35,22 @@ namespace Doppelkopf.Test
 
             Assert.AreSame(trick.GetWinner(), round.StartPlayer);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(RoundFinishedException))]
+        public void PlayTrick_RoundFinished() {
+            int numCards = round.Players[0].Hand.Cards.Count;
+            try {
+                for (int i = 0; i < numCards; i++) {
+                    round.PlayTrick();
+                }
+            }
+            catch(RoundFinishedException) {
+                //Exception should only be thrown on last call
+                Assert.Fail();
+            }
+
+            round.PlayTrick();
+        }
     }
 }
