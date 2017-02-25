@@ -28,6 +28,10 @@ namespace Doppelkopf.Core {
             cards = shuffledCards;
         }
 
+        public void Sort() {
+            cards.Sort();
+        }
+
         internal protected virtual void AddCard(Card card, CardStack previousStack = null) {
             cards.Add(card);
         }

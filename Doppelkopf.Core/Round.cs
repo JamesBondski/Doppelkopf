@@ -44,6 +44,7 @@ namespace Doppelkopf.Core {
                     this.deck.Cards[0].MoveTo(player.Hand);
                 }
             }
+            this.Players.ForEach(player => player.Hand.Sort());
         }
 
         public void Play() {

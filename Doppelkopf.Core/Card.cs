@@ -28,13 +28,13 @@ namespace Doppelkopf.Core
 
     public enum CardType
     {
-        Trump,
-        Hearts,
-        Spades,
-        Clubs
+        Trump = 3,
+        Hearts = 1,
+        Spades =0,
+        Clubs = 2
     }
 
-    public class Card
+    public class Card : IComparable<Card>
     {
         static readonly Dictionary<string, Rank> RankMap = new Dictionary<string, Rank>() {
             ["N"] = Rank.Nine,
@@ -175,6 +175,16 @@ namespace Doppelkopf.Core
             }
             //Otherwise we can't tell since both cards are of different suits
             return 0;
+        }
+
+        //For sorting cards
+        public int CompareTo(Card other) {
+            if(this.CardType == other.CardType) {
+                return this.Rank.CompareTo(other.Rank);
+            }
+            else {
+                return this.CardType.CompareTo(other.CardType);
+            }
         }
     }
 }
