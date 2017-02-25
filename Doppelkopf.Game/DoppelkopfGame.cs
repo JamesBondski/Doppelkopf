@@ -11,7 +11,6 @@ namespace Doppelkopf.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D test;
 
         public DoppelkopfGame() {
             graphics = new GraphicsDeviceManager(this);
