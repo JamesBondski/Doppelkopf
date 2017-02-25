@@ -21,7 +21,7 @@ namespace Doppelkopf.Core {
 
         public bool IsRunning {
             get {
-                return this.Players[0].Hand.Cards.Count() == 0;
+                return this.Players[0].Hand.Cards.Count() > 0;
             }
         }
 
@@ -30,6 +30,9 @@ namespace Doppelkopf.Core {
             this.deck = DeckBuilder.GetDoppelkopfDeck();
             this.Players = this.Game.Players;
             this.StartPlayer = startPlayer != null ? startPlayer : this.Players[0];
+
+            //Need to clear all tricks from the players when a new round starts
+            this.Players.ForEach(player => player.Tricks.Clear());
 
             this.Deal();
         }
@@ -40,6 +43,12 @@ namespace Doppelkopf.Core {
                 foreach(Player player in this.Players) {
                     this.deck.Cards[0].MoveTo(player.Hand);
                 }
+            }
+        }
+
+        public void Play() {
+            while(IsRunning) {
+                PlayTrick();
             }
         }
 
@@ -57,6 +66,7 @@ namespace Doppelkopf.Core {
                 this.Players[i].Play(trick);
             }
             this.StartPlayer = trick.GetWinner();
+            trick.GetWinner().Tricks.Add(trick);
             return trick;
         }
     }

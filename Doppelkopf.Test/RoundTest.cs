@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Doppelkopf.Core;
+using System.Linq;
 
 namespace Doppelkopf.Test
 {
@@ -51,6 +52,14 @@ namespace Doppelkopf.Test
             }
 
             round.PlayTrick();
+        }
+
+        [TestMethod]
+        public void Round_TotalPoints() {
+            while(round.IsRunning) {
+                round.PlayTrick();
+            }
+            Assert.AreEqual(240, round.Players.Select(player => player.Points).Sum());
         }
     }
 }

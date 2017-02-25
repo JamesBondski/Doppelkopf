@@ -19,6 +19,16 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
+        public List<Trick> Tricks {
+            get;
+        } = new List<Trick>();
+
+        public int Points {
+            get {
+                return this.Tricks.Select(trick => trick.Points).Sum();
+            }
+        }
+
         public Player(string name = null) {
             this.Name = name;
             this.Hand = new Hand() { Owner = this };

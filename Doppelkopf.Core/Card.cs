@@ -52,6 +52,15 @@ namespace Doppelkopf.Core
             ["C"] = Suit.Clubs
         };
 
+        static readonly Dictionary<Rank, int> PointMap = new Dictionary<Rank, int>() {
+            [Rank.Nine] = 0,
+            [Rank.Ten] = 10,
+            [Rank.Jack] = 2,
+            [Rank.Queen] = 3,
+            [Rank.King] = 4,
+            [Rank.Ace] = 11
+        };
+
         public Suit Suit {
             get; set;
         }
@@ -91,6 +100,12 @@ namespace Doppelkopf.Core
                     return true;
                 }
                 return false;
+            }
+        }
+
+        public int Points {
+            get {
+                return PointMap[this.Rank];
             }
         }
 

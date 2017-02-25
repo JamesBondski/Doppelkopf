@@ -22,6 +22,7 @@ namespace Doppelkopf.Console
             AddCommand(new QuitCommand());
             AddCommand(new PlayTrickCommand());
             AddCommand(new ControlPlayerCommand());
+            AddCommand(new PointsCommand());
 
             while(!state.DoQuit) {
                 System.Console.Write("? ");

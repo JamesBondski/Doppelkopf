@@ -94,4 +94,17 @@ namespace Doppelkopf.Console
             System.Console.WriteLine("Controlling " + controlledPlayer.Name);
         }
     }
+
+    public class PointsCommand : Command
+    {
+        public override string Keyword {
+            get {
+                return "points";
+            }
+        }
+
+        public override void Execute(State state, string args) {
+            System.Console.WriteLine(state.Round.Players.Select(player => player.Name + ": " + player.Points).Aggregate((current, next) => current + "," + next));
+        }
+    }
 }

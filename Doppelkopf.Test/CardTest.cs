@@ -125,5 +125,15 @@ namespace Doppelkopf.Test {
             CompareCardsBothWays(1, new Card(Rank.Queen, Suit.Spades), new Card(Rank.Queen, Suit.Diamonds));
             CompareCardsBothWays(1, new Card(Rank.Queen, Suit.Clubs), new Card(Rank.Queen, Suit.Diamonds));
         }
+
+        [TestMethod]
+        public void CardPoints() {
+            Assert.AreEqual(11, new Card("DA").Points);
+            Assert.AreEqual(10, new Card("DT").Points);
+            Assert.AreEqual(4, new Card("DK").Points);
+            Assert.AreEqual(3, new Card("DQ").Points);
+            Assert.AreEqual(2, new Card("DJ").Points);
+            Assert.AreEqual(0, new Card("DN").Points);
+        }
     }
 }

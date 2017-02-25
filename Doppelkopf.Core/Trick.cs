@@ -13,6 +13,12 @@ namespace Doppelkopf.Core
             get; set;
         }
 
+        public int Points {
+            get {
+                return this.PlayedCards.Select(card => card.Item2.Points).Sum();
+            }
+        }
+
         public IReadOnlyList<Tuple<Player, Card>> Played {
             get { return PlayedCards.AsReadOnly(); }
         }

@@ -78,5 +78,11 @@ namespace Doppelkopf.Test
             Assert.AreEqual("Player 3", CreateTrick("SA DA DJ SK").GetWinner().Name);
             Assert.AreEqual("Player 3", CreateTrick("DA DJ DQ SJ").GetWinner().Name);
         }
+
+        [TestMethod]
+        public void Trick_Points() {
+            //Point values of individual cards are tested, so we just want to test addition
+            Assert.AreEqual(28, CreateTrick("SA DT HK CQ").Points);
+        }
     }
 }
