@@ -46,6 +46,8 @@
     <Compile Include="DoppelkopfGame.cs" />
     <Compile Include="GameRunner\ClientActor.cs" />
     <Compile Include="GameRunner\Runner.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

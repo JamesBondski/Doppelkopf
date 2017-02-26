@@ -4,6 +4,7 @@ using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Doppelkopf.Client.Input;
 
 namespace Doppelkopf.Client
 {
@@ -16,11 +17,14 @@ namespace Doppelkopf.Client
         SpriteBatch spriteBatch;
         CardRenderer cardRender;
         Runner game;
+        InputManager input;
 
         public DoppelkopfGame() {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1300;
             graphics.PreferredBackBufferHeight = 800;
+
+            input = new InputManager(this);
 
             Content.RootDirectory = "Content";
         }
