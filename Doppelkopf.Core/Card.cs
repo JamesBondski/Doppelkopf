@@ -180,7 +180,7 @@ namespace Doppelkopf.Core
         //For sorting cards
         public int CompareTo(Card other) {
             if(this.CardType == other.CardType) {
-                return this.Rank.CompareTo(other.Rank);
+                return this.CompareCardTo(other);
             }
             else {
                 return this.CardType.CompareTo(other.CardType);
