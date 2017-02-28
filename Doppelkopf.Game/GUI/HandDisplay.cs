@@ -45,6 +45,8 @@ namespace Doppelkopf.Client.GUI
                 this.Children.Add(new CardDisplay(this) { Card = card, Area = new Rectangle(curX, 0, cardWidth, this.Area.Height) });
                 curX += cardWidth + this.Spacing;
             }
+
+            this.lastNumOfCards = this.Player.Hand.Cards.Count;
         }
     }
 }
