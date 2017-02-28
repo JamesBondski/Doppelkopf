@@ -46,8 +46,13 @@
     <Compile Include="DoppelkopfGame.cs" />
     <Compile Include="GameRunner\ClientActor.cs" />
     <Compile Include="GameRunner\Runner.cs" />
+    <Compile Include="GUI\CardDisplay.cs" />
+    <Compile Include="GUI\HandDisplay.cs" />
+    <Compile Include="GUI\Screen.cs" />
+    <Compile Include="GUI\ScreenComponent.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
+    <Compile Include="GUI\MainScreen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

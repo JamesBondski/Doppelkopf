@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Doppelkopf.Client.Input;
+using Doppelkopf.Client.GUI;
 
 namespace Doppelkopf.Client
 {
@@ -15,9 +16,12 @@ namespace Doppelkopf.Client
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        CardRenderer cardRender;
-        Runner game;
         InputManager input;
+        Screen currentScreen;
+
+        public Runner Game {
+            get; set;
+        }
 
         public DoppelkopfGame() {
             graphics = new GraphicsDeviceManager(this);
@@ -36,15 +40,17 @@ namespace Doppelkopf.Client
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            game = new Runner();
-            game.Start();
+            this.Game = new Runner();
+            this.Game.Start();
             this.IsMouseVisible = true;
+
+            this.currentScreen = new MainScreen(this);
 
             base.Initialize();
         }
 
         protected override void OnExiting(object sender, EventArgs args) {
-            game.Stop();
+            this.Game.Stop();
             base.OnExiting(sender, args);
         }
 
@@ -55,8 +61,8 @@ namespace Doppelkopf.Client
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            cardRender = new CardRenderer(Content);
-            cardRender.Scale = 0.2f;
+
+            CardRenderer.Initialize(Content);
         }
 
         /// <summary>
@@ -86,12 +92,7 @@ namespace Doppelkopf.Client
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            int count = 0;
-            int startPoint = (int)((GraphicsDevice.Viewport.Width - this.game.Actor.Cards.Count * (cardRender.CardSize.X + 20) * cardRender.Scale) / 2);
-            foreach(Card card in this.game.Actor.Cards) {
-                cardRender.Draw(card, spriteBatch, new Point(startPoint + (int)(count * (cardRender.CardSize.X + 20) * cardRender.Scale), (int)(GraphicsDevice.Viewport.Height - (720 * cardRender.Scale) - 10)));
-                count++;
-            }
+            currentScreen?.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
