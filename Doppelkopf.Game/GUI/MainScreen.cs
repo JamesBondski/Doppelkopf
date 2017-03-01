@@ -13,7 +13,7 @@ namespace Doppelkopf.Client.GUI
     {
         private static readonly int cardHeight = 175;
 
-        public MainScreen(DoppelkopfGame game) {
+        public MainScreen(DoppelkopfGame game) : base(game.Input) {
             this.Area = new Rectangle(0, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             new HandDisplay(this, game.Game.Player, new Rectangle(0, game.GraphicsDevice.Viewport.Height - cardHeight - 20, game.GraphicsDevice.Viewport.Width, cardHeight));
         }

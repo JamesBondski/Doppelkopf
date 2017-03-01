@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Doppelkopf.Client.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace Doppelkopf.Client.GUI
         public Rectangle Area {
             get; set;
         }
+
+        public event EventHandler<MouseEventArgs> Click;
 
         public Point ScreenPosition {
             get {
@@ -52,6 +55,45 @@ namespace Doppelkopf.Client.GUI
 
         public virtual void Update(GameTime time) {
             this.Children.ForEach(child => child.Update(time));
+        }
+
+        public virtual void Activate() {
+        }
+
+        public virtual void Deactivate() {
+        }
+
+        bool clickInProgress = false;
+
+        internal bool HandleMouseEvent(MouseEventArgs args) {
+            bool handledByChild = false;
+            this.Children.ForEach(child => {
+                if (child.HandleMouseEvent(args)) {
+                    handledByChild = true;
+                }
+            });
+
+            bool isInArea = this.ScreenArea.Contains(args.CurrentPosition);
+            HandleLeftClick(args, handledByChild, isInArea);
+
+            return handledByChild || isInArea;
+        }
+
+        private void HandleLeftClick(MouseEventArgs args, bool handledByChild, bool isInArea) {
+            if (isInArea) {
+                //Click begun
+                if (this.Click != null && !handledByChild && args.EventType == MouseEventType.Down && args.Button == MouseButton.Left && this.ScreenArea.Contains(args.CurrentPosition)) {
+                    this.clickInProgress = true;
+                }
+            }
+
+            if (clickInProgress && args.EventType == MouseEventType.Up && args.Button == MouseButton.Left) {
+                //Click over, successful only if inside
+                clickInProgress = false;
+                if (isInArea && this.Click != null) {
+                    this.Click(this, args);
+                }
+            }
         }
     }
 }

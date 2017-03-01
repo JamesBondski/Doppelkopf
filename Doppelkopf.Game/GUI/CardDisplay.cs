@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Doppelkopf.Core;
+using Microsoft.Xna.Framework;
 
 namespace Doppelkopf.Client.GUI
 {
@@ -14,12 +15,16 @@ namespace Doppelkopf.Client.GUI
             get; set;
         } = null;
 
+        public bool IsSelected {
+            get; set;
+        }
+
         public CardDisplay(ScreenComponent parent) : base(parent) {
         }
 
         public override void Draw(SpriteBatch batch) {
             if(this.Card != null) {
-                CardRenderer.Draw(this.Card, batch, this.ScreenArea);
+                CardRenderer.Draw(this.Card, batch, this.ScreenArea, this.IsSelected ? Color.LightGreen : Color.White);
             }
 
             base.Draw(batch);

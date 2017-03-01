@@ -13,6 +13,13 @@ namespace Doppelkopf.Client.Input
         Right
     }
 
+    public enum MouseEventType
+    {
+        Down,
+        Up,
+        Move
+    }
+
     public class MouseEventArgs : EventArgs
     {
         public Point CurrentPosition {
@@ -31,13 +38,18 @@ namespace Doppelkopf.Client.Input
             get;
         }
 
-        public MouseEventArgs(Point lastPosition, Point currentPosition) {
+        public MouseEventType EventType {
+            get;
+        }
+
+        public MouseEventArgs(MouseEventType eventType, Point lastPosition, Point currentPosition) {
             this.CurrentPosition = currentPosition;
             this.LastPosition = lastPosition;
             this.PositionDelta = new Point(currentPosition.X - lastPosition.X, currentPosition.Y - lastPosition.Y);
+            this.EventType = eventType;
         }
 
-        public MouseEventArgs(Point lastPosition, Point currentPosition, MouseButton button) : this(lastPosition, currentPosition) {
+        public MouseEventArgs(MouseEventType eventType, Point lastPosition, Point currentPosition, MouseButton button) : this(eventType, lastPosition, currentPosition) {
             this.Button = button;
         }
     }

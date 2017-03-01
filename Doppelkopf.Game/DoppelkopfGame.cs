@@ -19,6 +19,10 @@ namespace Doppelkopf.Client
         InputManager input;
         Screen currentScreen;
 
+        public InputManager Input {
+            get { return this.input; }
+        }
+
         public Runner Game {
             get; set;
         }
@@ -45,11 +49,13 @@ namespace Doppelkopf.Client
             this.IsMouseVisible = true;
 
             this.currentScreen = new MainScreen(this);
+            this.currentScreen.Activate();
 
             base.Initialize();
         }
 
         protected override void OnExiting(object sender, EventArgs args) {
+            this.currentScreen.Deactivate();
             this.Game.Stop();
             base.OnExiting(sender, args);
         }
