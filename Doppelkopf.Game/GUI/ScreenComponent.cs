@@ -90,7 +90,7 @@ namespace Doppelkopf.Client.GUI
             if (clickInProgress && args.EventType == MouseEventType.Up && args.Button == MouseButton.Left) {
                 //Click over, successful only if inside
                 clickInProgress = false;
-                if (isInArea && this.Click != null) {
+                if (isInArea && !handledByChild && this.Click != null) {
                     this.Click(this, args);
                 }
             }
