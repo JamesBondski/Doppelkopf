@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Doppelkopf.Client.GameRunner;
 
 namespace Doppelkopf.Client.GUI
 {
@@ -49,7 +50,6 @@ namespace Doppelkopf.Client.GUI
             foreach(Card card in this.Player.Hand.Cards) {
                 CardDisplay display = new CardDisplay(this) { Card = card, Area = new Rectangle(curX, 0, cardWidth, this.Area.Height) };
                 display.Click += OnCardClick;
-                this.Children.Add(display);
                 curX += cardWidth + this.Spacing;
             }
 
@@ -58,7 +58,17 @@ namespace Doppelkopf.Client.GUI
 
         private void OnCardClick(object sender, Input.MouseEventArgs e) {
             foreach(CardDisplay child in this.Children.OfType<CardDisplay>()) {
-                child.IsSelected = (child == sender);
+                if (child == sender) {
+                    if (child.IsSelected) {
+                        (this.Player.Actor as ClientActor).PlayCard(child.Card);
+                    }
+                    else {
+                        child.IsSelected = true;
+                    }
+                }
+                else {
+                    child.IsSelected = false;
+                }
             }
         }
     }
