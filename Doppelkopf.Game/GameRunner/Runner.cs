@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Doppelkopf.Core;
+using System.Collections.Concurrent;
 
 namespace Doppelkopf.Client.GameRunner
 {
@@ -24,6 +25,10 @@ namespace Doppelkopf.Client.GameRunner
             get;
         }
 
+        public BlockingCollection<IAction> Actions {
+            get;
+        } = new BlockingCollection<IAction>();
+
         public ClientActor Actor {
             get { return Player.Actor as ClientActor; }
         }
@@ -35,6 +40,12 @@ namespace Doppelkopf.Client.GameRunner
             this.Player = player != null ? player : this.Game.Players[0];
 
             this.Player.Actor = new ClientActor(this.Player);
+
+            this.Game.Action += Game_Action;
+        }
+
+        private void Game_Action(object sender, ActionEventArgs e) {
+            this.Actions.Add(e.Action);
         }
 
         public void Start() {

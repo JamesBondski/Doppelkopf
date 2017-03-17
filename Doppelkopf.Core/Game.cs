@@ -8,6 +8,8 @@ namespace Doppelkopf.Core
 {
     public class Game
     {
+        public event EventHandler<ActionEventArgs> Action;
+
         public List<Player> Players {
             get;
         }
@@ -26,7 +28,14 @@ namespace Doppelkopf.Core
         }
 
         public void Play() {
-            CurrentRound.Play();
+            this.CurrentRound.Action += CurrentRound_Action;
+            this.CurrentRound.Play();
+        }
+
+        private void CurrentRound_Action(object sender, ActionEventArgs e) {
+            if(this.Action != null) {
+                this.Action(this, e);
+            }
         }
     }
 }

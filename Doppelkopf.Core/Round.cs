@@ -11,6 +11,8 @@ namespace Doppelkopf.Core {
             get;
         }
 
+        public event EventHandler<ActionEventArgs> Action;
+
         public List<IAction> Actions {
             get;
         } = new List<IAction>();
@@ -54,6 +56,9 @@ namespace Doppelkopf.Core {
         public void DoAction(IAction action) {
             action.Do();
             this.Actions.Add(action);
+            if(this.Action != null) {
+                this.Action(this, new ActionEventArgs() { Action = action, Round = this });
+            }
         }
 
         public void Play() {
@@ -80,6 +85,12 @@ namespace Doppelkopf.Core {
         }
     }
 
+
+    public class ActionEventArgs : EventArgs
+    {
+        public IAction Action { get; set; }
+        public Round Round { get; set; }
+    }
 
     [Serializable]
     public class RoundFinishedException : Exception
