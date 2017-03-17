@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayCardAction.cs" />
+    <Compile Include="IAction.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="DeckBuilder.cs" />
     <Compile Include="DefaultPlayerActor.cs" />
@@ -51,6 +53,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CardStack.cs" />
     <Compile Include="Trick.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Actions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

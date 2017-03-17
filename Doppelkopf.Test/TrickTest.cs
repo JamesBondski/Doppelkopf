@@ -15,18 +15,19 @@ namespace Doppelkopf.Test
             Card card1 = new Card(Rank.Ace, Suit.Clubs);
             Player player2 = new Player();
             Card card2 = new Card(Rank.Ten, Suit.Diamonds);
+            Round round = new Round(new Game());
 
             Assert.AreEqual(0, trick.Played.Count);
 
             card1.MoveTo(player1.Hand);
-            player1.Play(trick);
+            player1.Play(round, trick);
 
             Assert.AreEqual(1, trick.Played.Count);
             Assert.AreSame(player1, trick.Played[0].Item1);
             Assert.AreSame(card1, trick.Played[0].Item2);
 
             card2.MoveTo(player2.Hand);
-            player2.Play(trick);
+            player2.Play(round, trick);
 
             Assert.AreEqual(2, trick.Played.Count);
             Assert.AreSame(player1, trick.Played[0].Item1);

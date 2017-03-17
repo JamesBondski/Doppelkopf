@@ -11,6 +11,10 @@ namespace Doppelkopf.Core {
             get;
         }
 
+        public List<IAction> Actions {
+            get;
+        } = new List<IAction>();
+
         public List<Player> Players {
             get;
         }
@@ -47,6 +51,11 @@ namespace Doppelkopf.Core {
             this.Players.ForEach(player => player.Hand.Sort());
         }
 
+        public void DoAction(IAction action) {
+            action.Do();
+            this.Actions.Add(action);
+        }
+
         public void Play() {
             while(IsRunning) {
                 PlayTrick();
@@ -61,10 +70,10 @@ namespace Doppelkopf.Core {
             Queue<Player> trickQueue = new Queue<Player>();
             Trick trick = new Trick();
             for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
-                this.Players[i].Play(trick);
+                this.Players[i].Play(this, trick);
             }
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
-                this.Players[i].Play(trick);
+                this.Players[i].Play(this, trick);
             }
             this.StartPlayer = trick.GetWinner();
             trick.GetWinner().Tricks.Add(trick);

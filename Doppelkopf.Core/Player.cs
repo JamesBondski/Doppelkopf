@@ -35,8 +35,8 @@ namespace Doppelkopf.Core {
             this.Actor = new DefaultPlayerActor() { Player = this };
         }
 
-        public void Play(Trick trick) {
-            this.Actor.GetCardForTrick(trick).MoveTo(trick);
+        public void Play(Round round, Trick trick) {
+            round.DoAction(new PlayCardAction(this, trick, this.Actor.GetCardForTrick(trick)));
         }
     }
 }

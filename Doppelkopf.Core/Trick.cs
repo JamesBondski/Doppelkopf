@@ -42,6 +42,11 @@ namespace Doppelkopf.Core
             return currentWinner.Item1;
         }
 
+        protected internal override void RemoveCard(Card card) {
+            this.PlayedCards.RemoveAll(played => played.Item2 == card);
+            base.RemoveCard(card);
+        }
+
         protected internal override void AddCard(Card card, CardStack previousStack = null) {
             //We know this card must come from the hand of a player
             Trace.Assert(previousStack != null, "Card added to trick must come from a CardStack");
