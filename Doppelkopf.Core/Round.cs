@@ -75,8 +75,7 @@ namespace Doppelkopf.Core {
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
                 this.Players[i].Play(this, trick);
             }
-            this.StartPlayer = trick.GetWinner();
-            trick.GetWinner().Tricks.Add(trick);
+            this.DoAction(new NewTrickAction(this, trick));
             return trick;
         }
     }

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewTrickAction.cs" />
     <Compile Include="PlayCardAction.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="Card.cs" />

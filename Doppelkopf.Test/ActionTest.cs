@@ -12,11 +12,14 @@ namespace Doppelkopf.Test
             Round round = new Round(new Game());
             Trick trick = round.PlayTrick();
 
-            //Check that 4 PlayCardActions are on the round
-            Assert.AreEqual(4, round.Actions.Count);
+            //Check that 4 PlayCardActions and 1 NewTrickAction are on the round
+            Assert.AreEqual(5, round.Actions.Count);
             for(int i=0;i<4;i++) {
                 Assert.IsInstanceOfType(round.Actions[i], typeof(PlayCardAction));
             }
+            Assert.IsInstanceOfType(round.Actions[4], typeof(NewTrickAction));
+
+            Assert.AreEqual(trick.GetWinner(), round.StartPlayer);
         }
     }
 }
