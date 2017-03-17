@@ -11,6 +11,10 @@ namespace Doppelkopf.Core {
             get;
         }
 
+        public Trick CurrentTrick {
+            get; set;
+        }
+
         public event EventHandler<ActionEventArgs> Action;
 
         public List<IAction> Actions {
@@ -36,6 +40,7 @@ namespace Doppelkopf.Core {
             this.deck = DeckBuilder.GetDoppelkopfDeck();
             this.Players = this.Game.Players;
             this.StartPlayer = startPlayer != null ? startPlayer : this.Players[0];
+            this.CurrentTrick = new Trick();
 
             //Need to clear all tricks from the players when a new round starts
             this.Players.ForEach(player => player.Tricks.Clear());
@@ -54,7 +59,7 @@ namespace Doppelkopf.Core {
         }
 
         public void DoAction(IAction action) {
-            action.Do();
+            action.Do(this.Game);
             this.Actions.Add(action);
             if(this.Action != null) {
                 this.Action(this, new ActionEventArgs() { Action = action, Round = this });
@@ -73,15 +78,15 @@ namespace Doppelkopf.Core {
             }
 
             Queue<Player> trickQueue = new Queue<Player>();
-            Trick trick = new Trick();
+            this.CurrentTrick = new Trick();
             for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
-                this.Players[i].Play(this, trick);
+                this.Players[i].Play(this, this.CurrentTrick);
             }
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
-                this.Players[i].Play(this, trick);
+                this.Players[i].Play(this, this.CurrentTrick);
             }
-            this.DoAction(new NewTrickAction(this, trick));
-            return trick;
+            this.DoAction(new NewTrickAction());
+            return CurrentTrick;
         }
     }
 

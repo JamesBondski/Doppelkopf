@@ -23,12 +23,10 @@ namespace Doppelkopf.Core
             this.Card = card;
         }
 
-        public void Do() {
-            this.Card.MoveTo(this.Trick);
-        }
-
-        public void Undo() {
-            this.Trick.RemoveCard(this.Card);
+        public void Do(Game game) {
+            game.Players.First(player => player.Name == this.Player.Name)
+                .Hand.Cards.First(card => card.Symbol == this.Card.Symbol)
+                .MoveTo(game.CurrentRound.CurrentTrick);
         }
     }
 }

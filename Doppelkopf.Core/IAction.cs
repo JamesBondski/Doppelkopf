@@ -12,7 +12,6 @@ namespace Doppelkopf.Core
             get;
         }
 
-        void Do();
-        void Undo();
+        void Do(Game game);
     }
 }

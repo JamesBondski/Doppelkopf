@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Doppelkopf.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Doppelkopf.Test
 {
@@ -10,25 +11,24 @@ namespace Doppelkopf.Test
     {
         [TestMethod]
         public void PlayedTest() {
-            Trick trick = new Trick();
-            Player player1 = new Player();
-            Card card1 = new Card(Rank.Ace, Suit.Clubs);
-            Player player2 = new Player();
-            Card card2 = new Card(Rank.Ten, Suit.Diamonds);
-            Round round = new Round(new Game());
+            Game game = new Game();
+            Round round = game.CurrentRound;
+            Trick trick = game.CurrentRound.CurrentTrick;
+            Player player1 = game.Players[0];
+            Player player2 = game.Players[1];
 
             Assert.AreEqual(0, trick.Played.Count);
 
-            card1.MoveTo(player1.Hand);
             player1.Play(round, trick);
+            Card card1 = trick.Cards[trick.Cards.Count - 1];
 
             Assert.AreEqual(1, trick.Played.Count);
             Assert.AreSame(player1, trick.Played[0].Item1);
             Assert.AreSame(card1, trick.Played[0].Item2);
 
-            card2.MoveTo(player2.Hand);
             player2.Play(round, trick);
 
+            Card card2 = trick.Cards[trick.Cards.Count - 1];
             Assert.AreEqual(2, trick.Played.Count);
             Assert.AreSame(player1, trick.Played[0].Item1);
             Assert.AreSame(card1, trick.Played[0].Item2);

@@ -9,17 +9,17 @@ namespace Doppelkopf.Test
     {
         [TestMethod]
         public void TrickActions() {
-            Round round = new Round(new Game());
-            Trick trick = round.PlayTrick();
+            Game game = new Game();
+            Trick trick = game.CurrentRound.PlayTrick();
 
             //Check that 4 PlayCardActions and 1 NewTrickAction are on the round
-            Assert.AreEqual(5, round.Actions.Count);
+            Assert.AreEqual(5, game.CurrentRound.Actions.Count);
             for(int i=0;i<4;i++) {
-                Assert.IsInstanceOfType(round.Actions[i], typeof(PlayCardAction));
+                Assert.IsInstanceOfType(game.CurrentRound.Actions[i], typeof(PlayCardAction));
             }
-            Assert.IsInstanceOfType(round.Actions[4], typeof(NewTrickAction));
+            Assert.IsInstanceOfType(game.CurrentRound.Actions[4], typeof(NewTrickAction));
 
-            Assert.AreEqual(trick.GetWinner(), round.StartPlayer);
+            Assert.AreEqual(trick.GetWinner(), game.CurrentRound.StartPlayer);
         }
     }
 }
