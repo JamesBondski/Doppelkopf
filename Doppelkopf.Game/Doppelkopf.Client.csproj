@@ -42,11 +42,15 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ActionController.cs" />
+    <Compile Include="Actors\NewTrickActor.cs" />
+    <Compile Include="Actors\PlayCardActor.cs" />
     <Compile Include="CardRenderer.cs" />
     <Compile Include="DoppelkopfGame.cs" />
     <Compile Include="GameRunner\ClientActor.cs" />
     <Compile Include="GameRunner\Runner.cs" />
     <Compile Include="GUI\CardDisplay.cs" />
+    <Compile Include="GUI\CardStackDisplay.cs" />
     <Compile Include="GUI\HandDisplay.cs" />
     <Compile Include="GUI\Screen.cs" />
     <Compile Include="GUI\ScreenComponent.cs" />

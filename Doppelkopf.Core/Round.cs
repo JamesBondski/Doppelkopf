@@ -72,21 +72,20 @@ namespace Doppelkopf.Core {
             }
         }
 
-        public Trick PlayTrick() {
+        public void PlayTrick() {
             if(!this.IsRunning) {
                 throw new RoundFinishedException();
             }
 
             Queue<Player> trickQueue = new Queue<Player>();
-            this.CurrentTrick = new Trick();
             for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
                 this.Players[i].Play(this, this.CurrentTrick);
             }
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
                 this.Players[i].Play(this, this.CurrentTrick);
             }
+            
             this.DoAction(new NewTrickAction());
-            return CurrentTrick;
         }
     }
 

@@ -23,6 +23,10 @@ namespace Doppelkopf.Client.GUI
             get; set;
         }
 
+        public string ID {
+            get; set;
+        }
+
         public event EventHandler<MouseEventArgs> Click;
 
         public Point ScreenPosition {

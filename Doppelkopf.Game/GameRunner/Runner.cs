@@ -25,9 +25,9 @@ namespace Doppelkopf.Client.GameRunner
             get;
         }
 
-        public BlockingCollection<IAction> Actions {
+        public ConcurrentQueue<IAction> Actions {
             get;
-        } = new BlockingCollection<IAction>();
+        } = new ConcurrentQueue<IAction>();
 
         public ClientActor Actor {
             get { return Player.Actor as ClientActor; }
@@ -45,7 +45,7 @@ namespace Doppelkopf.Client.GameRunner
         }
 
         private void Game_Action(object sender, ActionEventArgs e) {
-            this.Actions.Add(e.Action);
+            this.Actions.Enqueue(e.Action);
         }
 
         public void Start() {

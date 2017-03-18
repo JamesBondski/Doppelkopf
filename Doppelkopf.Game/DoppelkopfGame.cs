@@ -18,12 +18,17 @@ namespace Doppelkopf.Client
         SpriteBatch spriteBatch;
         InputManager input;
         Screen currentScreen;
+        ActionController Actions;
+
+        public Screen CurrentScreen {
+            get { return currentScreen; }
+        }
 
         public InputManager Input {
             get { return this.input; }
         }
 
-        public Runner Game {
+        public Runner Runner {
             get; set;
         }
 
@@ -44,9 +49,11 @@ namespace Doppelkopf.Client
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            this.Game = new Runner();
-            this.Game.Start();
+            this.Runner = new Runner();
+            this.Runner.Start();
             this.IsMouseVisible = true;
+
+            this.Actions = new ActionController(this);
 
             this.currentScreen = new MainScreen(this);
             this.currentScreen.Activate();
@@ -56,7 +63,7 @@ namespace Doppelkopf.Client
 
         protected override void OnExiting(object sender, EventArgs args) {
             this.currentScreen.Deactivate();
-            this.Game.Stop();
+            this.Runner.Stop();
             base.OnExiting(sender, args);
         }
 

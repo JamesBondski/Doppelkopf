@@ -21,6 +21,7 @@ namespace Doppelkopf.Core
             Player winningPlayer = game.CurrentRound.CurrentTrick.GetWinner();
             winningPlayer.Tricks.Add(game.CurrentRound.CurrentTrick);
             game.CurrentRound.StartPlayer = winningPlayer;
+            game.CurrentRound.CurrentTrick = new Trick();
         }
     }
 }

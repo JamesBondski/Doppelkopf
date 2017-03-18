@@ -10,52 +10,29 @@ using Doppelkopf.Client.GameRunner;
 
 namespace Doppelkopf.Client.GUI
 {
-    class HandDisplay : ScreenComponent
+    class HandDisplay : CardStackDisplay
     {
         public Player Player {
             get;
         }
+        
+        public HandDisplay(ScreenComponent parent, Player player, Rectangle area) : base(parent, player.Hand, area) {
+            this.CardCreated += HandDisplay_CardCreated;
+            this.CardRemoved += HandDisplay_CardRemoved;
 
-        public int Spacing {
-            get; set;
-        } = 5;
-
-        private int lastNumOfCards = 0;
-
-        public HandDisplay(ScreenComponent parent, Player player, Rectangle area) : base(parent) {
-            this.Area = area;
             this.Player = player;
-            this.Populate();
+
+            this.Repopulate();
         }
 
-        public override void Update(GameTime time) {
-            if(this.Player.Hand.Cards.Count != this.lastNumOfCards) {
-                ClearChildren();
-                Populate();
-            }
-
-            base.Update(time);
+        private void HandDisplay_CardRemoved(object sender, CardDisplayEventArgs e) {
+            e.Display.Click -= OnCardClick;
         }
 
-        private void ClearChildren() {
-            this.Children.ForEach(child => child.Click -= OnCardClick);
-            this.Children.Clear();
+        private void HandDisplay_CardCreated(object sender, CardDisplayEventArgs e) {
+            e.Display.Click += OnCardClick;
         }
-
-        private void Populate() {
-            int effectiveWidth = this.Area.Width - this.Player.Hand.Cards.Count * this.Spacing;
-            int cardWidth = (this.Area.Width - this.Player.Hand.Cards.Count * this.Spacing) / this.Player.Hand.Cards.Count;
-
-            int curX = 0;
-            foreach(Card card in this.Player.Hand.Cards) {
-                CardDisplay display = new CardDisplay(this) { Card = card, Area = new Rectangle(curX, 0, cardWidth, this.Area.Height) };
-                display.Click += OnCardClick;
-                curX += cardWidth + this.Spacing;
-            }
-
-            this.lastNumOfCards = this.Player.Hand.Cards.Count;
-        }
-
+        
         private void OnCardClick(object sender, Input.MouseEventArgs e) {
             foreach(CardDisplay child in this.Children.OfType<CardDisplay>()) {
                 if (child == sender) {
