@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
+using Doppelkopf.Client.GUI;
 
 namespace Doppelkopf.Client.Actors
 {
@@ -43,15 +44,21 @@ namespace Doppelkopf.Client.Actors
         public PlayCardActor(DoppelkopfGame game, IAction action) {
             this.action = action as PlayCardAction;
             this.game = game;
+            InitParameters(game);
 
-            //Find out start location of card (Player's hand)
+            display = new GUI.CardDisplay(this.game.CurrentScreen);
+            display.Area = new Rectangle(this.startLocation, size);
+            display.Card = this.action.Card;
+        }
+
+        private void InitParameters(DoppelkopfGame game) {
             this.startLocation = new Point(
-                GetStartX(game),
-                GetStartY(game)
-            );
+                            GetStartX(game),
+                            GetStartY(game)
+                        );
 
             this.endLocation = new Point(
-                game.GraphicsDevice.Viewport.Width / 2 - size.X /2,
+                game.GraphicsDevice.Viewport.Width / 2 - size.X / 2,
                 game.GraphicsDevice.Viewport.Height / 2 - size.Y / 2
             );
 
@@ -59,11 +66,6 @@ namespace Doppelkopf.Client.Actors
             this.curY = this.startLocation.Y;
             this.speedX = (this.endLocation.X - this.startLocation.X) / animationTimeMs;
             this.speedY = (this.endLocation.Y - this.startLocation.Y) / animationTimeMs;
-
-            //Find out end location of card (Trick display)
-            display = new GUI.CardDisplay(this.game.CurrentScreen);
-            display.Area = new Rectangle(this.startLocation, size);
-            display.Card = this.action.Card;
         }
 
         private int GetStartX(DoppelkopfGame game) {
@@ -83,6 +85,9 @@ namespace Doppelkopf.Client.Actors
         }
         
         public void Update(GameTime gameTime) {
+            //Make sure the last card of the trick is not visible
+            (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Last().Visible = false;
+
             curX += speedX * gameTime.ElapsedGameTime.Milliseconds;
             curY += speedY * gameTime.ElapsedGameTime.Milliseconds;
             display.Area = new Rectangle((int)curX, (int)curY, size.X, size.Y);
@@ -94,6 +99,7 @@ namespace Doppelkopf.Client.Actors
 
             if (this.Done) {
                 this.game.CurrentScreen.Children.Remove(display);
+                (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Last().Visible = true;
             }
         }
     }

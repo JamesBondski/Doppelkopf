@@ -27,6 +27,10 @@ namespace Doppelkopf.Client.GUI
             get; set;
         }
 
+        public bool Visible {
+            get; set;
+        } = true;
+
         public event EventHandler<MouseEventArgs> Click;
 
         public Point ScreenPosition {
@@ -54,7 +58,7 @@ namespace Doppelkopf.Client.GUI
         }
 
         public virtual void Draw(SpriteBatch batch) {
-            this.Children.ForEach(child => child.Draw(batch));
+            this.Children.Where(child => child.Visible).ToList().ForEach(child => child.Draw(batch));
         }
 
         public virtual void Update(GameTime time) {
