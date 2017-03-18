@@ -19,6 +19,10 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
+        public int ID {
+            get; set;
+        }
+
         public List<Trick> Tricks {
             get;
         } = new List<Trick>();
