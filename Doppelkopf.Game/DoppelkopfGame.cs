@@ -20,6 +20,11 @@ namespace Doppelkopf.Client
         Screen currentScreen;
         ActionController Actions;
 
+        private static DoppelkopfGame instance;
+        public static DoppelkopfGame Instance {
+            get { return instance; }
+        }
+
         public Screen CurrentScreen {
             get { return currentScreen; }
         }
@@ -28,16 +33,23 @@ namespace Doppelkopf.Client
             get { return this.input; }
         }
 
+        public TextRenderer TextRenderer {
+            get;
+        }
+
         public Runner Runner {
             get; set;
         }
 
         public DoppelkopfGame() {
+            instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1300;
             graphics.PreferredBackBufferHeight = 800;
 
             input = new InputManager(this);
+            this.TextRenderer = new TextRenderer(this);
 
             Content.RootDirectory = "Content";
         }
@@ -76,6 +88,7 @@ namespace Doppelkopf.Client
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             CardRenderer.Initialize(Content);
+            this.TextRenderer.LoadContent(Content);
         }
 
         /// <summary>
