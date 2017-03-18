@@ -28,6 +28,7 @@ namespace Doppelkopf.Client
             if (this.CurrentActor != null && this.CurrentActor.Done) {
                 this.currentAction = null;
                 this.CurrentActor = null;
+                (this.Game as DoppelkopfGame).Runner.ActionHandled.Set();
             }
 
             if (this.currentAction == null
@@ -46,6 +47,7 @@ namespace Doppelkopf.Client
                     break;
                 default:
                     this.currentAction = null;
+                    (this.Game as DoppelkopfGame).Runner.ActionHandled.Set();
                     break;
             }
         }

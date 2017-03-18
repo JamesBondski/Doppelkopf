@@ -29,6 +29,10 @@ namespace Doppelkopf.Client.GameRunner
             get;
         } = new ConcurrentQueue<IAction>();
 
+        public AutoResetEvent ActionHandled {
+            get; set;
+        } = new AutoResetEvent(false);
+
         public ClientActor Actor {
             get { return Player.Actor as ClientActor; }
         }
@@ -46,6 +50,7 @@ namespace Doppelkopf.Client.GameRunner
 
         private void Game_Action(object sender, ActionEventArgs e) {
             this.Actions.Enqueue(e.Action);
+            this.ActionHandled.WaitOne();
         }
 
         public void Start() {
