@@ -10,7 +10,8 @@ namespace Doppelkopf.Test
         [TestMethod]
         public void TrickActions() {
             Game game = new Game();
-            Trick trick = game.CurrentRound.PlayTrick();
+            Trick trick = game.CurrentRound.CurrentTrick;
+            game.CurrentRound.PlayTrick();
 
             //Check that 4 PlayCardActions and 1 NewTrickAction are on the round
             Assert.AreEqual(5, game.CurrentRound.Actions.Count);

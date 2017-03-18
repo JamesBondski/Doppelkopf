@@ -26,7 +26,8 @@ namespace Doppelkopf.Test
 
         [TestMethod]
         public void PlayTrickTest() {
-            Trick trick = round.PlayTrick();
+            Trick trick = round.CurrentTrick;
+            round.PlayTrick();
 
             Assert.AreEqual(4, trick.Played.Count);
             Assert.AreSame(round.Players[0], trick.Played[0].Item1);

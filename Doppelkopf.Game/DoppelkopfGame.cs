@@ -37,6 +37,10 @@ namespace Doppelkopf.Client
             get;
         }
 
+        public CardRenderer CardRenderer {
+            get;
+        }
+
         public Runner Runner {
             get; set;
         }
@@ -50,6 +54,7 @@ namespace Doppelkopf.Client
 
             input = new InputManager(this);
             this.TextRenderer = new TextRenderer(this);
+            this.CardRenderer = new CardRenderer(this);
 
             Content.RootDirectory = "Content";
         }
@@ -87,7 +92,7 @@ namespace Doppelkopf.Client
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            CardRenderer.Initialize(Content);
+            this.CardRenderer.LoadContent(Content);
             this.TextRenderer.LoadContent(Content);
         }
 

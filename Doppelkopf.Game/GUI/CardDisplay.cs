@@ -24,7 +24,7 @@ namespace Doppelkopf.Client.GUI
 
         public override void Draw(SpriteBatch batch) {
             if(this.Card != null) {
-                CardRenderer.Draw(this.Card, batch, this.ScreenArea, this.IsSelected ? Color.LightGreen : Color.White);
+                DoppelkopfGame.Instance.CardRenderer.Draw(this.Card, batch, this.ScreenArea, this.IsSelected ? Color.LightGreen : Color.White);
             }
 
             base.Draw(batch);

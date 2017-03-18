@@ -71,7 +71,8 @@ namespace Doppelkopf.Console
         }
 
         public override void Execute(State state, string args) {
-            Trick trick = state.Round.PlayTrick();
+            Trick trick = state.Round.CurrentTrick;
+            state.Round.PlayTrick();
             foreach(Tuple<Player,Card> playedCard in trick.Played) {
                 System.Console.Write(playedCard.Item1.Name + "->" + playedCard.Item2.Symbol + ", ");
             }
