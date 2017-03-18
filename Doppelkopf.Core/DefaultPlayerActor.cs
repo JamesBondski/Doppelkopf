@@ -8,12 +8,15 @@ namespace Doppelkopf.Core
 {
     public class DefaultPlayerActor : IPlayerActor
     {
+        private static Random rnd = new Random();
+
         public Player Player {
             get; set;
         }
 
         public Card GetCardForTrick(Trick trick) {
-            return this.Player.Hand.GetPlayableCards(trick).First();
+            var playable = this.Player.Hand.GetPlayableCards(trick).ToList();
+            return playable[rnd.Next(playable.Count)];
         }
     }
 }
