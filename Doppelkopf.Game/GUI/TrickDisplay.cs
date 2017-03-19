@@ -25,8 +25,10 @@ namespace Doppelkopf.Client.GUI
             this.PopulationComplete += TrickDisplay_PopulationComplete;
         }
 
+        /// <summary>
+        /// Sort the card displays so that the card of Player 0 is always the first CardDisplay in Children.
+        /// </summary>
         private void TrickDisplay_PopulationComplete(object sender, EventArgs e) {
-            //jeweils das letzte CardDisplay an erste Stelle packen
             for(int i=0; i<this.StartPlayer; i++) {
                 CardDisplay lastDisplay = this.Children.OfType<CardDisplay>().Last();
                 this.Children.Remove(lastDisplay);

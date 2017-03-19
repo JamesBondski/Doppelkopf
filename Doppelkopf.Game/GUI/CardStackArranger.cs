@@ -39,11 +39,10 @@ namespace Doppelkopf.Client.GUI
                 throw new ArgumentException("CardStackDisplays for diamond have to contain exactly 4 cards.");
             }
 
-            //Positionen 0 (unten) und 2 (oben)
-            //X-Koordinate ist zentriert
+            //Position 0 (bottom) und 2 (top)
+            //X position is centered
             int xPos02 = display.Area.Width / 2 - display.CardSize.X / 2;
 
-            //Y-Koordinate für 0 ist entweder gemessen vom unteren Rand (wenn Spread true) oder vom Mittelpunkt
             int yPos0 = display.SpreadCards
                 ? display.Area.Height - display.Spacing - display.CardSize.Y
                 : display.Area.Height / 2 + display.Spacing / 2;
@@ -54,7 +53,7 @@ namespace Doppelkopf.Client.GUI
                 : display.Area.Height / 2 - display.Spacing / 2 - display.CardSize.Y;
             displays[2].Area = new Rectangle(xPos02, yPos2, display.CardSize.X, display.CardSize.Y);
 
-            //Positionen 1 (links) und 2 (rechts)
+            //Position 1 (left) and 3 (right)
             int yPos13 = display.Area.Height / 2 - display.CardSize.Y / 2;
 
             int xPos1 = display.SpreadCards
