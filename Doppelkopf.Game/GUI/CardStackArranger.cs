@@ -46,12 +46,12 @@ namespace Doppelkopf.Client.GUI
             //Y-Koordinate für 0 ist entweder gemessen vom unteren Rand (wenn Spread true) oder vom Mittelpunkt
             int yPos0 = display.SpreadCards
                 ? display.Area.Height - display.Spacing - display.CardSize.Y
-                : display.Area.Height / 2 + display.Spacing;
+                : display.Area.Height / 2 + display.Spacing / 2;
             displays[0].Area = new Rectangle(xPos02, yPos0, display.CardSize.X, display.CardSize.Y);
 
             int yPos2 = display.SpreadCards
                 ? display.Spacing
-                : display.Area.Height / 2 - display.Spacing - display.CardSize.Y;
+                : display.Area.Height / 2 - display.Spacing / 2 - display.CardSize.Y;
             displays[2].Area = new Rectangle(xPos02, yPos2, display.CardSize.X, display.CardSize.Y);
 
             //Positionen 1 (links) und 2 (rechts)
@@ -59,12 +59,12 @@ namespace Doppelkopf.Client.GUI
 
             int xPos1 = display.SpreadCards
                 ? display.Spacing
-                : display.Area.Width / 2 - display.Spacing - display.CardSize.X;
+                : display.Area.Width / 2 - display.Spacing - display.CardSize.X - display.CardSize.X / 2;
             displays[1].Area = new Rectangle(xPos1, yPos13, display.CardSize.X, display.CardSize.Y);
 
             int xPos3 = display.SpreadCards
                 ? display.Area.Width - display.Spacing - display.CardSize.X
-                : display.Area.Width / 2 + display.Spacing;
+                : display.Area.Width / 2 + display.Spacing + display.CardSize.X / 2;
             displays[3].Area = new Rectangle(xPos3, yPos13, display.CardSize.X, display.CardSize.Y);
         }
 
