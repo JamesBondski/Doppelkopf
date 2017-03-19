@@ -12,7 +12,7 @@ namespace Doppelkopf.Client.Actors
     public class PlayCardActor : IActionActor
     {
         private static readonly Point size = new Point(120, 175);
-        private static readonly float animationTimeMs = 500;
+        private static readonly float animationTimeMs = 400;
 
         //These indicate, where the animation should start. 0=Top/Left, 50=Middle, 100=Bottom/Right
         Dictionary<int, Point> startLocations = new Dictionary<int, Point>() {
@@ -28,41 +28,22 @@ namespace Doppelkopf.Client.Actors
         }
 
         public bool Done {
-            get; set;
-        } = false;
-
-        Point startLocation;
-        Point endLocation;
-        float speedX = 0;
-        float speedY = 0;
-        float curX = 0;
-        float curY = 0;
+            get { return this.mover.Done; }
+        }
 
         DoppelkopfGame game;
         GUI.CardDisplay display;
 
+        CardMover mover;
+
         public PlayCardActor(DoppelkopfGame game, IAction action) {
             this.action = action as PlayCardAction;
             this.game = game;
-            InitParameters(game);
 
             display = new GUI.CardDisplay(this.game.CurrentScreen);
-            display.Area = new Rectangle(this.startLocation, size);
             display.Card = this.action.Card;
-        }
 
-        private void InitParameters(DoppelkopfGame game) {
-            this.startLocation = new Point(
-                            GetStartX(game),
-                            GetStartY(game)
-                        );
-
-            this.endLocation = (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition;
-
-            this.curX = this.startLocation.X;
-            this.curY = this.startLocation.Y;
-            this.speedX = (this.endLocation.X - this.startLocation.X) / animationTimeMs;
-            this.speedY = (this.endLocation.Y - this.startLocation.Y) / animationTimeMs;
+            this.mover = new CardMover(display, size, new Point(GetStartX(game), GetStartY(game)), (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
         }
 
         private int GetStartX(DoppelkopfGame game) {
@@ -82,14 +63,7 @@ namespace Doppelkopf.Client.Actors
         }
         
         public void Update(GameTime gameTime) {
-            curX += speedX * gameTime.ElapsedGameTime.Milliseconds;
-            curY += speedY * gameTime.ElapsedGameTime.Milliseconds;
-            display.Area = new Rectangle((int)curX, (int)curY, size.X, size.Y);
-
-            if(((this.speedX > 0 && this.endLocation.X < this.curX) || (this.speedX <= 0 && this.endLocation.X > this.curX) || this.speedX == 0)
-                && ((this.speedY > 0 && this.endLocation.Y < this.curY) || (this.speedY <= 0 && this.endLocation.Y >= this.curY) || this.speedY == 0)) {
-                this.Done = true;
-            }
+            mover.Update(gameTime);
 
             if (this.Done) {
                 this.game.CurrentScreen.Children.Remove(display);

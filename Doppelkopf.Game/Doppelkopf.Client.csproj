@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActionController.cs" />
+    <Compile Include="Actors\CardMover.cs" />
     <Compile Include="Actors\NewTrickActor.cs" />
     <Compile Include="Actors\PlayCardActor.cs" />
     <Compile Include="CardRenderer.cs" />
