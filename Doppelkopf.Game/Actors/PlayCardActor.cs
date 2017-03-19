@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Doppelkopf.Client.GUI;
+using Doppelkopf.Client.GameRunner;
 
 namespace Doppelkopf.Client.Actors
 {
@@ -35,7 +36,12 @@ namespace Doppelkopf.Client.Actors
             display = new GUI.CardDisplay(this.game.CurrentScreen);
             display.Card = this.action.Card;
 
-            this.mover = new CardMover(display, size, CardMover.GetPlayerPosition(this.action.Player.ID, size), (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
+            Point startPosition = CardMover.GetPlayerPosition(this.action.Player.ID, size);
+            if (this.action.Player.ID == 0) {
+                //For player card, use the actual start position
+                startPosition = (this.action.Player.Actor as ClientActor).LastPlayedCardPosition;
+            }
+            this.mover = new CardMover(display, size, startPosition, (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
         }
         
         public void Update(GameTime gameTime) {

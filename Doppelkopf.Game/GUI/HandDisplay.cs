@@ -38,6 +38,7 @@ namespace Doppelkopf.Client.GUI
             foreach(CardDisplay child in this.Children.OfType<CardDisplay>()) {
                 if (child == sender) {
                     if (child.IsSelected) {
+                        (this.Player.Actor as ClientActor).LastPlayedCardPosition = child.ScreenPosition;
                         (this.Player.Actor as ClientActor).PlayCard(child.Card);
                     }
                     else {

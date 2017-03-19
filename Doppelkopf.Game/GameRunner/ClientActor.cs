@@ -1,4 +1,5 @@
 ﻿using Doppelkopf.Core;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -23,6 +24,10 @@ namespace Doppelkopf.Client.GameRunner
 
         public IReadOnlyList<Card> Cards {
             get { return Player.Hand.Cards; }
+        }
+
+        public Point LastPlayedCardPosition {
+            get; set;
         }
 
         public Card GetCardForTrick(Trick trick) {
