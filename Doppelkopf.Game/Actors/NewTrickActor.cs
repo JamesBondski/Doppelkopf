@@ -46,6 +46,7 @@ namespace Doppelkopf.Client.Actors
             this.Game.Input.MouseDown -= Input_MouseDown;
 
             ((MainScreen)this.Game.CurrentScreen).TrickDisplay.Stack = new CardStack();
+            ((MainScreen)this.Game.CurrentScreen).TrickDisplay.StartPlayer = this.action.WinningPlayer.ID;
             Done = true;
             this.Done = true;
             label.Parent.Children.Remove(label);

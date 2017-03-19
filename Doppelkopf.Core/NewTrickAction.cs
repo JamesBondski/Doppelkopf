@@ -14,13 +14,17 @@ namespace Doppelkopf.Core
             }
         }
 
+        public Player WinningPlayer {
+            get; set;
+        }
+
         public NewTrickAction() {
         }
 
         public void Do(Game game) {
-            Player winningPlayer = game.CurrentRound.CurrentTrick.GetWinner();
-            winningPlayer.Tricks.Add(game.CurrentRound.CurrentTrick);
-            game.CurrentRound.StartPlayer = winningPlayer;
+            this.WinningPlayer = game.CurrentRound.CurrentTrick.GetWinner();
+            this.WinningPlayer.Tricks.Add(game.CurrentRound.CurrentTrick);
+            game.CurrentRound.StartPlayer = this.WinningPlayer;
             game.CurrentRound.CurrentTrick = new Trick();
         }
     }

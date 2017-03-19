@@ -12,11 +12,26 @@ namespace Doppelkopf.Client.GUI
     {
         private static readonly int spacing = 10;
 
+        public int StartPlayer {
+            get; set;
+        }
+
         public TrickDisplay(ScreenComponent parent) : base(parent, new CardStack(), GetTrickArea()) {
             this.FixedCapacity = 4;
             this.Arrangement = ArrangementType.Diamond;
             this.Spacing = spacing;
             this.SpreadCards = false;
+
+            this.PopulationComplete += TrickDisplay_PopulationComplete;
+        }
+
+        private void TrickDisplay_PopulationComplete(object sender, EventArgs e) {
+            //jeweils das letzte CardDisplay an erste Stelle packen
+            for(int i=0; i<this.StartPlayer; i++) {
+                CardDisplay lastDisplay = this.Children.OfType<CardDisplay>().Last();
+                this.Children.Remove(lastDisplay);
+                this.Children.Insert(0, lastDisplay);
+            }
         }
 
         private static Rectangle GetTrickArea() {

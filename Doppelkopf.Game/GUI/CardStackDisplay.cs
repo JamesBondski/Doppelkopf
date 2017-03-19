@@ -62,6 +62,8 @@ namespace Doppelkopf.Client.GUI
         public event EventHandler<CardDisplayEventArgs> CardCreated;
         public event EventHandler<CardDisplayEventArgs> CardRemoved;
 
+        public event EventHandler<EventArgs> PopulationComplete;
+        
         private int lastNumOfCards = -1;
         private IArranger arranger;
 
@@ -86,7 +88,7 @@ namespace Doppelkopf.Client.GUI
         /// <summary>
         /// Synchronize child elements with the associated CardStack and trigger rearrangement of cards
         /// </summary>
-        protected void Repopulate() {
+        protected virtual void Repopulate() {
             //Remove dummy displays
             this.Children.RemoveAll(child => child.GetType() == typeof(CardDisplay) && (child as CardDisplay).Card == null);
 
@@ -113,6 +115,10 @@ namespace Doppelkopf.Client.GUI
                 while(this.Children.OfType<CardDisplay>().Count() < this.FixedCapacity) {
                     new CardDisplay(this);
                 }
+            }
+
+            if(PopulationComplete != null) {
+                PopulationComplete(this, new EventArgs());
             }
 
             this.arranger.Arrange(this);

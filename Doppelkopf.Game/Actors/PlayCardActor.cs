@@ -40,7 +40,7 @@ namespace Doppelkopf.Client.Actors
                 //For player card, use the actual start position
                 startPosition = (this.action.Player.Actor as ClientActor).LastPlayedCardPosition;
             }
-            this.mover = new CardMover(display, CardRenderer.DefaultRenderSize, startPosition, (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
+            this.mover = new CardMover(display, CardRenderer.DefaultRenderSize, startPosition, (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().ToList()[this.action.Player.ID].ScreenPosition, animationTimeMs);
         }
         
         public void Update(GameTime gameTime) {
