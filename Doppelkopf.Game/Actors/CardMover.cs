@@ -46,5 +46,33 @@ namespace Doppelkopf.Client.Actors
                 this.Done = true;
             }
         }
+
+        //These indicate, where the animation should start. 0=Top/Left, 50=Middle, 100=Bottom/Right
+        private static Dictionary<int, Point> startLocations = new Dictionary<int, Point>() {
+            [0] = new Point(50, 100),
+            [1] = new Point(0, 50),
+            [2] = new Point(50, 0),
+            [3] = new Point(100, 50)
+        };
+
+        public static Point GetPlayerPosition(int playerID, Point size) {
+            return new Point(GetStartX(DoppelkopfGame.Instance, playerID, size), GetStartY(DoppelkopfGame.Instance, playerID, size));
+        }
+
+        private static int GetStartX(DoppelkopfGame game, int playerID, Point size) {
+            int pos = game.GraphicsDevice.Viewport.Width * startLocations[playerID].X / 100;
+            if (pos > 0) {
+                pos -= size.X / 2;
+            }
+            return pos;
+        }
+
+        private static int GetStartY(DoppelkopfGame game, int playerID, Point size) {
+            int pos = game.GraphicsDevice.Viewport.Height * startLocations[playerID].Y / 100;
+            if (pos > 0) {
+                pos -= size.Y / 2;
+            }
+            return pos;
+        }
     }
 }
