@@ -27,6 +27,14 @@ namespace Doppelkopf.Client.GUI
             }
         }
 
+        public int CardCount {
+            get { return this.Children.OfType<CardDisplay>().Count(); }
+        }
+
+        public int FixedCapacity {
+            get; set;
+        } = -1;
+
         static Dictionary<ArrangementType, IArranger> arrangers = new Dictionary<ArrangementType, IArranger>() {
             [ArrangementType.Horizontal] = new HorizontalArranger()
         };
@@ -70,6 +78,9 @@ namespace Doppelkopf.Client.GUI
         /// Synchronize child elements with the associated CardStack and trigger rearrangement of cards
         /// </summary>
         protected void Repopulate() {
+            //Remove dummy displays
+            this.Children.RemoveAll(child => child.GetType() == typeof(CardDisplay) && (child as CardDisplay).Card == null);
+
             //Remove cards that are in the display but not in the stack
             this.Children.OfType<CardDisplay>().Where(display => !this.Stack.Cards.Any(card => card == display.Card))
                 .ToList().ForEach(display => {
@@ -87,6 +98,13 @@ namespace Doppelkopf.Client.GUI
                         this.CardCreated(this, new CardDisplayEventArgs() { Display = display });
                     }
                 });
+
+            //If a fixed size is specified, create necessary displays
+            if(this.FixedCapacity != -1 && this.Children.OfType<CardDisplay>().Count()<this.FixedCapacity) {
+                while(this.Children.OfType<CardDisplay>().Count() < this.FixedCapacity) {
+                    new CardDisplay(this);
+                }
+            }
 
             this.arranger.Arrange(this);
         }

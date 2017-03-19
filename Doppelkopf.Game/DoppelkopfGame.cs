@@ -41,6 +41,10 @@ namespace Doppelkopf.Client
             get;
         }
 
+        public PrimitivesRenderer PrimitivesRenderer {
+            get;
+        }
+
         public Runner Runner {
             get; set;
         }
@@ -55,6 +59,7 @@ namespace Doppelkopf.Client
             input = new InputManager(this);
             this.TextRenderer = new TextRenderer(this);
             this.CardRenderer = new CardRenderer(this);
+            this.PrimitivesRenderer = new PrimitivesRenderer(this);
 
             Content.RootDirectory = "Content";
         }
@@ -91,6 +96,7 @@ namespace Doppelkopf.Client
 
             this.CardRenderer.LoadContent(Content);
             this.TextRenderer.LoadContent(Content);
+            this.PrimitivesRenderer.LoadContent(Content);
 
             this.currentScreen = new MainScreen(this);
             this.currentScreen.Activate();

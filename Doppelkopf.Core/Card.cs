@@ -34,7 +34,7 @@ namespace Doppelkopf.Core
         Clubs = 2
     }
 
-    public class Card : IComparable<Card>
+    public class Card : IComparable<Card>, ICloneable
     {
         static readonly Dictionary<string, Rank> RankMap = new Dictionary<string, Rank>() {
             ["N"] = Rank.Nine,
@@ -152,6 +152,12 @@ namespace Doppelkopf.Core
             this.Stack = stack;
         }
 
+        public void CopyTo(CardStack stack) {
+            Card newCard = (Card)this.Clone();
+            newCard.Stack = stack;
+            stack.AddCard(newCard);
+        }
+
         /// <summary>
         /// Checks if the this card is higher than the other one. This depends on what Suit was played originally.
         /// <returns>
@@ -185,6 +191,10 @@ namespace Doppelkopf.Core
             else {
                 return this.CardType.CompareTo(other.CardType);
             }
+        }
+
+        public object Clone() {
+            return new Card(this.Rank, this.Suit);
         }
     }
 }

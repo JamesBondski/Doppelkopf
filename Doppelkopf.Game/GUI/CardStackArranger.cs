@@ -31,7 +31,7 @@ namespace Doppelkopf.Client.GUI
         }
 
         public void Arrange(CardStackDisplay stackDisplay) {
-            if (stackDisplay.Stack.Cards.Count == 0) {
+            if (stackDisplay.CardCount == 0) {
                 return;
             }
 
@@ -39,11 +39,11 @@ namespace Doppelkopf.Client.GUI
             int curX = 0;
 
             if (stackDisplay.SpreadCards) {
-                cardWidth = (stackDisplay.Area.Width - stackDisplay.Stack.Cards.Count * stackDisplay.Spacing) / stackDisplay.Stack.Cards.Count;
+                cardWidth = (stackDisplay.Area.Width - stackDisplay.CardCount * stackDisplay.Spacing) / stackDisplay.CardCount;
             }
             else {
                 cardWidth = stackDisplay.Area.Height * DoppelkopfGame.Instance.CardRenderer.CardSize.X / DoppelkopfGame.Instance.CardRenderer.CardSize.Y;
-                curX = stackDisplay.Area.Width / 2 - cardWidth * stackDisplay.Stack.Cards.Count / 2;
+                curX = stackDisplay.Area.Width / 2 - cardWidth * stackDisplay.CardCount / 2;
             }
             
             foreach (CardDisplay display in stackDisplay.Children.OfType<CardDisplay>()) {

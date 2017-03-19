@@ -33,6 +33,21 @@ namespace Doppelkopf.Test {
         }
 
         [TestMethod]
+        public void Card_CopyTo() {
+            Card testCard = new Card(Rank.Ace, Suit.Clubs);
+            CardStack firstStack = new CardStack();
+            CardStack secondStack = new CardStack();
+
+            testCard.MoveTo(firstStack);
+            testCard.CopyTo(secondStack);
+
+            Assert.AreEqual(1, firstStack.Cards.Count);
+            Assert.AreEqual(1, secondStack.Cards.Count);
+            Assert.AreNotSame(firstStack.Cards[0], secondStack.Cards[0]);
+            Assert.AreEqual(firstStack.Cards[0].Symbol, secondStack.Cards[0].Symbol);
+        }
+
+        [TestMethod]
         public void IsTrump() {
             //All Diamonds should be trump
             foreach (Rank rank in Enum.GetValues(typeof(Rank))) {

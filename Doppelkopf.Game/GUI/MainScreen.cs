@@ -14,16 +14,15 @@ namespace Doppelkopf.Client.GUI
         private static readonly int cardHeight = 175;
         private static readonly int cardWidth = (int)(175.0 / 726 * 500);
 
-        CardStackDisplay trickDisplay;
-        public CardStackDisplay TrickDisplay {
+        TrickDisplay trickDisplay;
+        public TrickDisplay TrickDisplay {
             get { return trickDisplay; }
         }
 
         public MainScreen(DoppelkopfGame game) : base(game.Input) {
             this.Area = new Rectangle(0, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             new HandDisplay(this, game.Runner.Player, new Rectangle(0, game.GraphicsDevice.Viewport.Height - cardHeight - 20, game.GraphicsDevice.Viewport.Width, cardHeight));
-            this.trickDisplay = new CardStackDisplay(this, game.Runner.Game.CurrentRound.CurrentTrick, GetTrickArea(game));
-
+            this.trickDisplay = new TrickDisplay(this, GetTrickArea(game));
         }
 
         private Rectangle GetTrickArea(DoppelkopfGame game) {
