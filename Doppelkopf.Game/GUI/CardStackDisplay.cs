@@ -62,12 +62,14 @@ namespace Doppelkopf.Client.GUI
         public event EventHandler<CardDisplayEventArgs> CardCreated;
         public event EventHandler<CardDisplayEventArgs> CardRemoved;
 
-        public event EventHandler<EventArgs> PopulationComplete;
-        
+        public event EventHandler<PopulationEventArgs> PopulationComplete;
+
         private int lastNumOfCards = -1;
         private IArranger arranger;
 
         CardStack stack;
+
+        List<CardDisplay> displays = new List<CardDisplay>();
 
         public CardStackDisplay(ScreenComponent parent, CardStack stack, Rectangle area) : base(parent) {
             this.Area = area;
@@ -89,36 +91,38 @@ namespace Doppelkopf.Client.GUI
         /// Synchronize child elements with the associated CardStack and trigger rearrangement of cards
         /// </summary>
         protected virtual void Repopulate() {
-            //Remove dummy displays
-            this.Children.RemoveAll(child => child.GetType() == typeof(CardDisplay) && (child as CardDisplay).Card == null);
-
-            //Remove cards that are in the display but not in the stack
-            this.Children.OfType<CardDisplay>().Where(display => !this.Stack.Cards.Any(card => card == display.Card))
-                .ToList().ForEach(display => {
-                    if(this.CardRemoved != null) {
-                        this.CardRemoved(this, new CardDisplayEventArgs() { Display = display });
-                    }
-                    this.Children.Remove(display);
-                });
-
-            //Add cards that are in the stack but not in the display
-            this.Stack.Cards.Where(card => !this.Children.OfType<CardDisplay>().Any(display => display.Card == card))
-                .ToList().ForEach(card => {
-                    CardDisplay display = new CardDisplay(this) { Card = card };
-                    if (this.CardCreated != null) {
-                        this.CardCreated(this, new CardDisplayEventArgs() { Display = display });
-                    }
-                });
-
-            //If a fixed size is specified, create necessary displays
-            if(this.FixedCapacity != -1 && this.Children.OfType<CardDisplay>().Count()<this.FixedCapacity) {
-                while(this.Children.OfType<CardDisplay>().Count() < this.FixedCapacity) {
-                    new CardDisplay(this);
-                }
+            if (this.lastNumOfCards == -1) {
+                displays.Clear();
+                this.Children.RemoveAll(child => child.GetType() == typeof(CardDisplay));
             }
 
-            if(PopulationComplete != null) {
-                PopulationComplete(this, new EventArgs());
+            int displayCount = this.FixedCapacity >= 0 ? this.FixedCapacity : this.Stack.Cards.Count;
+            bool displaysChanged = false;
+
+            //Make sure our display list has the same number of cards as our stack
+            while (displays.Count > displayCount) {
+                if (this.CardRemoved != null) {
+                    this.CardRemoved(this, new CardDisplayEventArgs() { Display = displays[displays.Count - 1] });
+                }
+                displays.RemoveAt(displays.Count - 1);
+                this.Children.Remove(this.Children.OfType<CardDisplay>().Last());
+                displaysChanged = true;
+            }
+            while (displays.Count < displayCount) {
+                displays.Add(new CardDisplay(this));
+                if (this.CardCreated != null) {
+                    this.CardCreated(this, new CardDisplayEventArgs() { Display = displays[displays.Count - 1] });
+                }
+                displaysChanged = true;
+            }
+
+            //Synchronize cards with card displays
+            for (int i = 0; i < Math.Min(displayCount, this.Stack.Cards.Count); i++) {
+                displays[i].Card = this.Stack.Cards[i];
+            }
+
+            if (PopulationComplete != null) {
+                PopulationComplete(this, new PopulationEventArgs() { StackChanged = displaysChanged });
             }
 
             this.arranger.Arrange(this);
@@ -128,5 +132,10 @@ namespace Doppelkopf.Client.GUI
     public class CardDisplayEventArgs : EventArgs
     {
         public CardDisplay Display { get; set; }
+    }
+
+    public class PopulationEventArgs : EventArgs
+    {
+        public bool StackChanged { get; set; } = false;
     }
 }

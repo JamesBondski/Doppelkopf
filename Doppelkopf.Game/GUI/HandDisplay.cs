@@ -40,6 +40,7 @@ namespace Doppelkopf.Client.GUI
                     if (child.IsSelected) {
                         (this.Player.Actor as ClientActor).LastPlayedCardPosition = child.ScreenPosition;
                         (this.Player.Actor as ClientActor).PlayCard(child.Card);
+                        child.IsSelected = false;
                     }
                     else {
                         child.IsSelected = true;

@@ -28,11 +28,14 @@ namespace Doppelkopf.Client.GUI
         /// <summary>
         /// Sort the card displays so that the card of Player 0 is always the first CardDisplay in Children.
         /// </summary>
-        private void TrickDisplay_PopulationComplete(object sender, EventArgs e) {
-            for(int i=0; i<this.StartPlayer; i++) {
-                CardDisplay lastDisplay = this.Children.OfType<CardDisplay>().Last();
-                this.Children.Remove(lastDisplay);
-                this.Children.Insert(0, lastDisplay);
+        private void TrickDisplay_PopulationComplete(object sender, PopulationEventArgs e) {
+            if (e.StackChanged) {
+                Console.WriteLine("Repopulate " + this.StartPlayer);
+                for (int i = 0; i < this.StartPlayer; i++) {
+                    CardDisplay lastDisplay = this.Children.OfType<CardDisplay>().Last();
+                    this.Children.Remove(lastDisplay);
+                    this.Children.Insert(0, lastDisplay);
+                }
             }
         }
 
