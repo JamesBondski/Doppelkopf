@@ -72,9 +72,6 @@ namespace Doppelkopf.Client
 
             this.Actions = new ActionController(this);
 
-            this.currentScreen = new MainScreen(this);
-            this.currentScreen.Activate();
-
             base.Initialize();
         }
 
@@ -94,6 +91,9 @@ namespace Doppelkopf.Client
 
             this.CardRenderer.LoadContent(Content);
             this.TextRenderer.LoadContent(Content);
+
+            this.currentScreen = new MainScreen(this);
+            this.currentScreen.Activate();
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Doppelkopf.Client.GUI
         /// </summary>
         public bool SpreadCards {
             get; set;
-        }
+        } = true;
 
         public event EventHandler<CardDisplayEventArgs> CardCreated;
         public event EventHandler<CardDisplayEventArgs> CardRemoved;

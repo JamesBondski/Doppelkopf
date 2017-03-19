@@ -35,10 +35,17 @@ namespace Doppelkopf.Client.GUI
                 return;
             }
 
-            int effectiveWidth = stackDisplay.Area.Width - stackDisplay.Stack.Cards.Count * stackDisplay.Spacing;
-            int cardWidth = (stackDisplay.Area.Width - stackDisplay.Stack.Cards.Count * stackDisplay.Spacing) / stackDisplay.Stack.Cards.Count;
-
+            int cardWidth = 0;
             int curX = 0;
+
+            if (stackDisplay.SpreadCards) {
+                cardWidth = (stackDisplay.Area.Width - stackDisplay.Stack.Cards.Count * stackDisplay.Spacing) / stackDisplay.Stack.Cards.Count;
+            }
+            else {
+                cardWidth = stackDisplay.Area.Height * DoppelkopfGame.Instance.CardRenderer.CardSize.X / DoppelkopfGame.Instance.CardRenderer.CardSize.Y;
+                curX = stackDisplay.Area.Width / 2 - cardWidth * stackDisplay.Stack.Cards.Count / 2;
+            }
+            
             foreach (CardDisplay display in stackDisplay.Children.OfType<CardDisplay>()) {
                 display.Area = new Rectangle(curX, 0, cardWidth, stackDisplay.Area.Height);
                 curX += cardWidth + stackDisplay.Spacing;

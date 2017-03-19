@@ -21,6 +21,7 @@ namespace Doppelkopf.Client.GUI
             this.CardRemoved += HandDisplay_CardRemoved;
 
             this.Player = player;
+            this.SpreadCards = false;
 
             this.Repopulate();
         }
