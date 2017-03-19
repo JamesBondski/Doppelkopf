@@ -30,7 +30,6 @@ namespace Doppelkopf.Client.GUI
         /// </summary>
         private void TrickDisplay_PopulationComplete(object sender, PopulationEventArgs e) {
             if (e.StackChanged) {
-                Console.WriteLine("Repopulate " + this.StartPlayer);
                 for (int i = 0; i < this.StartPlayer; i++) {
                     CardDisplay lastDisplay = this.Children.OfType<CardDisplay>().Last();
                     this.Children.Remove(lastDisplay);

@@ -93,7 +93,12 @@ namespace Doppelkopf.Client.GUI
         protected virtual void Repopulate() {
             if (this.lastNumOfCards == -1) {
                 displays.Clear();
-                this.Children.RemoveAll(child => child.GetType() == typeof(CardDisplay));
+                this.Children.OfType<CardDisplay>().ToList().ForEach(cardDisplay => {
+                    if (this.CardRemoved != null) {
+                        this.CardRemoved(this, new CardDisplayEventArgs() { Display = cardDisplay });
+                    }
+                    this.Children.Remove(cardDisplay);
+                });
             }
 
             int displayCount = this.FixedCapacity >= 0 ? this.FixedCapacity : this.Stack.Cards.Count;
