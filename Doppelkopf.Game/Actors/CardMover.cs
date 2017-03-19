@@ -20,6 +20,10 @@ namespace Doppelkopf.Client.Actors
         float curX = 0;
         float curY = 0;
 
+        public CardDisplay Display {
+            get { return this.display; }
+        }
+
         public bool Done {
             get; set;
         } = false;

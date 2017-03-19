@@ -27,6 +27,7 @@ namespace Doppelkopf.Client.Actors
         }
 
         Label label;
+        List<CardMover> movers = new List<CardMover>();
 
         public NewTrickActor(DoppelkopfGame game, IAction action) {
             this.action = (NewTrickAction)action;
@@ -45,14 +46,32 @@ namespace Doppelkopf.Client.Actors
         private void Input_MouseDown(object sender, Input.MouseEventArgs e) {
             this.Game.Input.MouseDown -= Input_MouseDown;
 
-            ((MainScreen)this.Game.CurrentScreen).TrickDisplay.Stack = new CardStack();
-            ((MainScreen)this.Game.CurrentScreen).TrickDisplay.StartPlayer = this.action.WinningPlayer.ID;
-            Done = true;
-            this.Done = true;
+            TrickDisplay trickDisplay = ((MainScreen)this.Game.CurrentScreen).TrickDisplay;
+            foreach (CardDisplay cardDisplay in trickDisplay.Children.OfType<CardDisplay>()) {
+                movers.Add(new CardMover(new CardDisplay(this.Game.CurrentScreen) { Card = cardDisplay.Card }, CardRenderer.DefaultRenderSize, cardDisplay.ScreenPosition, CardMover.GetPlayerPosition(this.action.WinningPlayer.ID, CardRenderer.DefaultRenderSize)));
+                Console.WriteLine(CardMover.GetPlayerPosition(this.action.WinningPlayer.ID, CardRenderer.DefaultRenderSize));
+            }
+
+            trickDisplay.Stack = new CardStack();
+            trickDisplay.StartPlayer = this.action.WinningPlayer.ID;
+            
             label.Parent.Children.Remove(label);
         }
 
         public void Update(GameTime gameTime) {
+            foreach(CardMover mover in this.movers) {
+                mover.Update(gameTime);
+            }
+
+            if(movers.Any(mover => mover.Done)) {
+                movers.ToList().ForEach(mover => {
+                    this.Game.CurrentScreen.Children.Remove(mover.Display);
+                    movers.Remove(mover);
+                    
+                });
+                this.Done = true;
+                Console.WriteLine("Done");
+            }            
         }
     }
 }
