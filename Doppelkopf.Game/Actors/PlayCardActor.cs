@@ -57,10 +57,7 @@ namespace Doppelkopf.Client.Actors
                             GetStartY(game)
                         );
 
-            this.endLocation = new Point(
-                game.GraphicsDevice.Viewport.Width / 2 - size.X / 2,
-                game.GraphicsDevice.Viewport.Height / 2 - size.Y / 2
-            );
+            this.endLocation = (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Last().ScreenPosition;
 
             this.curX = this.startLocation.X;
             this.curY = this.startLocation.Y;
