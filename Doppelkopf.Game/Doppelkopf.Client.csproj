@@ -50,6 +50,7 @@
     <Compile Include="GameRunner\ClientActor.cs" />
     <Compile Include="GameRunner\Runner.cs" />
     <Compile Include="GUI\CardDisplay.cs" />
+    <Compile Include="GUI\CardStackArranger.cs" />
     <Compile Include="GUI\CardStackDisplay.cs" />
     <Compile Include="GUI\HandDisplay.cs" />
     <Compile Include="GUI\Label.cs" />

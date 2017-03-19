@@ -22,64 +22,73 @@ namespace Doppelkopf.Client.GUI
             }
 
             set {
-                ClearChildren();
                 stack = value;
-                Populate();
+                this.lastNumOfCards = -1;
             }
+        }
+
+        static Dictionary<ArrangementType, IArranger> arrangers = new Dictionary<ArrangementType, IArranger>() {
+            [ArrangementType.Horizontal] = new HorizontalArranger()
+        };
+
+        public ArrangementType Arrangement {
+            get { return arranger.Arrangement; }
+            set { this.arranger = arrangers[value]; }
+        }
+
+        /// <summary>
+        /// If set to true, the component will try to use the whole available area by spreading out the cards.
+        /// </summary>
+        public bool SpreadCards {
+            get; set;
         }
 
         public event EventHandler<CardDisplayEventArgs> CardCreated;
         public event EventHandler<CardDisplayEventArgs> CardRemoved;
 
         private int lastNumOfCards = -1;
+        private IArranger arranger;
 
         CardStack stack;
 
         public CardStackDisplay(ScreenComponent parent, CardStack stack, Rectangle area) : base(parent) {
             this.Area = area;
             this.Stack = stack;
+            this.Arrangement = ArrangementType.Horizontal;
         }
 
         public override void Update(GameTime time) {
             if (this.Stack.Cards.Count != this.lastNumOfCards) {
                 Repopulate();
+                this.lastNumOfCards = this.Stack.Cards.Count;
             }
 
             base.Update(time);
         }
 
+        /// <summary>
+        /// Synchronize child elements with the associated CardStack and trigger rearrangement of cards
+        /// </summary>
         protected void Repopulate() {
-            ClearChildren();
-            Populate();
-        }
+            //Remove cards that are in the display but not in the stack
+            this.Children.OfType<CardDisplay>().Where(display => !this.Stack.Cards.Any(card => card == display.Card))
+                .ToList().ForEach(display => {
+                    if(this.CardRemoved != null) {
+                        this.CardRemoved(this, new CardDisplayEventArgs() { Display = display });
+                    }
+                    this.Children.Remove(display);
+                });
 
-        private void ClearChildren() {
-            if (this.CardRemoved != null) {
-                this.Children.OfType<CardDisplay>().ToList()
-                    .ForEach(screenComponent => {
-                        this.CardRemoved(this, new CardDisplayEventArgs() { Display = screenComponent as CardDisplay });
-                    });
-            }
-            this.Children.Clear();
-        }
+            //Add cards that are in the stack but not in the display
+            this.Stack.Cards.Where(card => !this.Children.OfType<CardDisplay>().Any(display => display.Card == card))
+                .ToList().ForEach(card => {
+                    CardDisplay display = new CardDisplay(this) { Card = card };
+                    if (this.CardCreated != null) {
+                        this.CardCreated(this, new CardDisplayEventArgs() { Display = display });
+                    }
+                });
 
-        protected void Populate() {
-            this.lastNumOfCards = this.Stack.Cards.Count;
-            if (this.Stack.Cards.Count == 0) {
-                return;
-            }
-
-            int effectiveWidth = this.Area.Width - this.Stack.Cards.Count * this.Spacing;
-            int cardWidth = (this.Area.Width - this.Stack.Cards.Count * this.Spacing) / this.Stack.Cards.Count;
-
-            int curX = 0;
-            foreach (Card card in this.Stack.Cards) {
-                CardDisplay display = new CardDisplay(this) { Card = card, Area = new Rectangle(curX, 0, cardWidth, this.Area.Height) };
-                curX += cardWidth + this.Spacing;
-                if (this.CardCreated != null) {
-                    this.CardCreated(this, new CardDisplayEventArgs() { Display = display });
-                }
-            }
+            this.arranger.Arrange(this);
         }
     }
 
