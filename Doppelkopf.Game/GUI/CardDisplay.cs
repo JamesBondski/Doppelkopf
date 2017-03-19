@@ -29,5 +29,9 @@ namespace Doppelkopf.Client.GUI
 
             base.Draw(batch);
         }
+
+        protected override bool IsInArea(Point position) {
+            return DoppelkopfGame.Instance.CardRenderer.GetActualArea(this.ScreenArea).Contains(position);
+        }
     }
 }

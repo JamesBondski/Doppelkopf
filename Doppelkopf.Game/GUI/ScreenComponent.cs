@@ -81,10 +81,14 @@ namespace Doppelkopf.Client.GUI
                 }
             });
 
-            bool isInArea = this.ScreenArea.Contains(args.CurrentPosition);
+            bool isInArea = IsInArea(args.CurrentPosition);
             HandleLeftClick(args, handledByChild, isInArea);
 
             return handledByChild || isInArea;
+        }
+
+        protected virtual bool IsInArea(Point position) {
+            return this.ScreenArea.Contains(position);
         }
 
         private void HandleLeftClick(MouseEventArgs args, bool handledByChild, bool isInArea) {

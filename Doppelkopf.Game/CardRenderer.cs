@@ -44,16 +44,20 @@ namespace Doppelkopf.Client
         /// <param name="batch"></param>
         /// <param name="targetArea"></param>
         public void Draw(Card card, SpriteBatch batch, Rectangle targetArea, Color color) {
-            float scale = Math.Min(targetArea.Height / (float)CardSize.Y, targetArea.Width / (float)CardSize.X);
-            Rectangle actualArea = new Rectangle(
-                (int)(targetArea.X + targetArea.Width / 2 - CardSize.X * scale / 2),
-                (int)(targetArea.Y + targetArea.Height / 2 - CardSize.Y * scale / 2),
-                (int)(CardSize.X * scale),
-                (int)(CardSize.Y * scale)
-                );
+            Rectangle actualArea = GetActualArea(targetArea);
 
             Texture2D cardTexture = cardGraphics[card.Symbol];
             batch.Draw(cardGraphics[card.Symbol], actualArea, color);
+        }
+
+        public Rectangle GetActualArea(Rectangle targetArea) {
+            float scale = Math.Min(targetArea.Height / (float)CardSize.Y, targetArea.Width / (float)CardSize.X);
+            return new Rectangle(
+                            (int)(targetArea.X + targetArea.Width / 2 - CardSize.X * scale / 2),
+                            (int)(targetArea.Y + targetArea.Height / 2 - CardSize.Y * scale / 2),
+                            (int)(CardSize.X * scale),
+                            (int)(CardSize.Y * scale)
+                            );
         }
 
         public void Draw(Card card, SpriteBatch batch, Rectangle targetArea) {
