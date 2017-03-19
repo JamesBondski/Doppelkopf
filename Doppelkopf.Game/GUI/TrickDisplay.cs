@@ -12,6 +12,7 @@ namespace Doppelkopf.Client.GUI
     {
         public TrickDisplay(ScreenComponent parent, Rectangle area) : base(parent, new CardStack(), area) {
             this.FixedCapacity = 4;
+            this.Arrangement = ArrangementType.Diamond;
         }
     }
 }

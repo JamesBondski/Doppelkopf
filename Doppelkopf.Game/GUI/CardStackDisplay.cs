@@ -27,6 +27,10 @@ namespace Doppelkopf.Client.GUI
             }
         }
 
+        public Point CardSize {
+            get; set;
+        }
+
         public int CardCount {
             get { return this.Children.OfType<CardDisplay>().Count(); }
         }
@@ -36,12 +40,16 @@ namespace Doppelkopf.Client.GUI
         } = -1;
 
         static Dictionary<ArrangementType, IArranger> arrangers = new Dictionary<ArrangementType, IArranger>() {
-            [ArrangementType.Horizontal] = new HorizontalArranger()
+            [ArrangementType.Horizontal] = new HorizontalArranger(),
+            [ArrangementType.Diamond] = new DiamondArranger()
         };
 
         public ArrangementType Arrangement {
             get { return arranger.Arrangement; }
-            set { this.arranger = arrangers[value]; }
+            set {
+                this.arranger = arrangers[value];
+                this.CardSize = this.arranger.SuggestCardSize(this.Area);
+            }
         }
 
         /// <summary>
@@ -63,6 +71,7 @@ namespace Doppelkopf.Client.GUI
             this.Area = area;
             this.Stack = stack;
             this.Arrangement = ArrangementType.Horizontal;
+            this.CardSize = new Point(area.Width, area.Height);
         }
 
         public override void Update(GameTime time) {

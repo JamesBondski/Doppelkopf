@@ -12,7 +12,6 @@ namespace Doppelkopf.Client.Actors
 {
     public class PlayCardActor : IActionActor
     {
-        private static readonly Point size = new Point(120, 175);
         private static readonly float animationTimeMs = 400;
         
         PlayCardAction action;
@@ -36,12 +35,12 @@ namespace Doppelkopf.Client.Actors
             display = new GUI.CardDisplay(this.game.CurrentScreen);
             display.Card = this.action.Card;
 
-            Point startPosition = CardMover.GetPlayerPosition(this.action.Player.ID, size);
+            Point startPosition = CardMover.GetPlayerPosition(this.action.Player.ID, CardRenderer.DefaultRenderSize);
             if (this.action.Player.ID == 0) {
                 //For player card, use the actual start position
                 startPosition = (this.action.Player.Actor as ClientActor).LastPlayedCardPosition;
             }
-            this.mover = new CardMover(display, size, startPosition, (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
+            this.mover = new CardMover(display, CardRenderer.DefaultRenderSize, startPosition, (this.game.CurrentScreen as MainScreen).TrickDisplay.Children.OfType<CardDisplay>().Where(display => display.Card == null).First().ScreenPosition, animationTimeMs);
         }
         
         public void Update(GameTime gameTime) {

@@ -12,6 +12,8 @@ namespace Doppelkopf.Client
 {
     public class CardRenderer : GameComponent
     {
+        public static Point DefaultRenderSize = new Point(100, 146);
+
         Dictionary<string, Texture2D> cardGraphics = new Dictionary<string, Texture2D>();
 
         string[] ranks = "N,T,J,Q,K,A".Split(',');
