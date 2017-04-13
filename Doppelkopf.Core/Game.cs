@@ -24,7 +24,7 @@ namespace Doppelkopf.Core
                 this.Players.Add(new Player() { Name = "Player " + i, ID = i });
             }
 
-            this.CurrentRound = new Core.Round(this);
+            this.CurrentRound = new Round(this);
         }
 
         public void Play() {
