@@ -60,7 +60,26 @@ namespace Doppelkopf.Test
             while(round.IsRunning) {
                 round.PlayTrick();
             }
-            Assert.AreEqual(240, round.Players.Select(player => player.Points).Sum());
+            Assert.AreEqual(240, round.Players.Select(player => player.RoundPoints).Sum());
+        }
+
+        [TestMethod]
+        public void Round_Teams() {
+            Assert.AreEqual(2, round.Teams.Count);
+            Assert.AreEqual(2, round.Teams[Team.Kontra].Count);
+            Assert.AreEqual(2, round.Teams[Team.Re].Count);
+
+            foreach(var team in round.Teams) {
+                foreach(var player in team.Value) {
+                    int queenOfClubsCount = player.Hand.Cards.Count(card => card.Symbol == "CQ");
+                    if(team.Key == Team.Re) {
+                        Assert.AreEqual(1, queenOfClubsCount);
+                    }
+                    else {
+                        Assert.AreEqual(0, queenOfClubsCount);
+                    }
+                }
+            }
         }
     }
 }

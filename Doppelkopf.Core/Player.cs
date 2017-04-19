@@ -27,11 +27,15 @@ namespace Doppelkopf.Core {
             get;
         } = new List<Trick>();
 
-        public int Points {
+        public int RoundPoints {
             get {
                 return this.Tricks.Select(trick => trick.Points).Sum();
             }
         }
+
+        public int GamePoints {
+            get; set;
+        } = 0;
 
         public Player(string name = null) {
             this.Name = name;

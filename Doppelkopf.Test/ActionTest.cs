@@ -22,5 +22,12 @@ namespace Doppelkopf.Test
 
             Assert.AreEqual(trick.GetWinner(), game.CurrentRound.StartPlayer);
         }
+
+        [TestMethod]
+        public void EndRoundAction() {
+            Game game = new Game();
+            game.CurrentRound.Play();
+            Assert.IsInstanceOfType(game.CurrentRound.Actions[game.CurrentRound.Actions.Count - 1], typeof(EndRoundAction));
+        }
     }
 }

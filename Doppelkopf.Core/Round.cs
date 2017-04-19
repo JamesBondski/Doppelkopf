@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Doppelkopf.Core {
+    public enum Team
+    {
+        Re,
+        Kontra
+    }
+
     public class Round {
         CardStack deck;
         Game Game {
@@ -25,6 +31,10 @@ namespace Doppelkopf.Core {
             get;
         }
 
+        public Dictionary<Team, List<Player>> Teams {
+            get; set;
+        } = new Dictionary<Team, List<Player>>();
+
         public Player StartPlayer {
             get; set;
         }
@@ -42,10 +52,17 @@ namespace Doppelkopf.Core {
             this.StartPlayer = startPlayer != null ? startPlayer : this.Players[0];
             this.CurrentTrick = new Trick();
 
+            this.Teams[Team.Kontra] = new List<Player>();
+            this.Teams[Team.Re] = new List<Player>();
+
             //Need to clear all tricks from the players when a new round starts
             this.Players.ForEach(player => player.Tricks.Clear());
 
             this.Deal();
+        }
+
+        public EndGameInfo End() {
+            return new EndGameInfo(this);
         }
 
         private void Deal() {
@@ -56,6 +73,19 @@ namespace Doppelkopf.Core {
                 }
             }
             this.Players.ForEach(player => player.Hand.Sort());
+
+            //Players with the Queen of Clubs are the Re team
+            this.Teams[Team.Re].Clear();
+            this.Teams[Team.Kontra].Clear();
+
+            this.Players.ForEach(player => {
+                if(player.Hand.Cards.Any(card => card.Symbol == "CQ")) {
+                    this.Teams[Team.Re].Add(player);
+                }
+                else {
+                    this.Teams[Team.Kontra].Add(player);
+                }
+            });
         }
 
         public void DoAction(IAction action) {
@@ -70,6 +100,7 @@ namespace Doppelkopf.Core {
             while(IsRunning) {
                 PlayTrick();
             }
+            DoAction(new EndRoundAction());
         }
 
         public void PlayTrick() {

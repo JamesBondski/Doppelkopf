@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EndGameInfo.cs" />
+    <Compile Include="EndRoundAction.cs" />
     <Compile Include="NewTrickAction.cs" />
     <Compile Include="PlayCardAction.cs" />
     <Compile Include="IAction.cs" />

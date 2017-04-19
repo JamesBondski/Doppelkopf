@@ -104,7 +104,7 @@ namespace Doppelkopf.Console
         }
 
         public override void Execute(State state, string args) {
-            System.Console.WriteLine(state.Round.Players.Select(player => player.Name + ": " + player.Points).Aggregate((current, next) => current + "," + next));
+            System.Console.WriteLine(state.Round.Players.Select(player => player.Name + ": " + player.RoundPoints).Aggregate((current, next) => current + "," + next));
         }
     }
 }

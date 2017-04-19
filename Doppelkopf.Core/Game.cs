@@ -15,8 +15,12 @@ namespace Doppelkopf.Core
         }
 
         public Round CurrentRound {
-            get;
+            get {
+                return this.currentRound;
+            }
         }
+
+        private Round currentRound;
 
         public Game() {
             this.Players = new List<Player>();
@@ -24,12 +28,19 @@ namespace Doppelkopf.Core
                 this.Players.Add(new Player() { Name = "Player " + i, ID = i });
             }
 
-            this.CurrentRound = new Round(this);
+            this.currentRound = new Round(this);
         }
 
         public void Play() {
             this.CurrentRound.Action += CurrentRound_Action;
             this.CurrentRound.Play();
+        }
+
+        public void NewRound() {
+            //For now, while "Hochzeit" is not implemented, just repeat until we get a valid round
+            do {
+                this.currentRound = new Round(this);
+            } while (this.currentRound.Teams[Team.Kontra].Count != 2);
         }
 
         private void CurrentRound_Action(object sender, ActionEventArgs e) {
