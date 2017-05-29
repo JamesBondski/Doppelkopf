@@ -49,7 +49,6 @@ namespace Doppelkopf.Client.Actors
             TrickDisplay trickDisplay = ((MainScreen)this.Game.CurrentScreen).TrickDisplay;
             foreach (CardDisplay cardDisplay in trickDisplay.Children.OfType<CardDisplay>()) {
                 movers.Add(new CardMover(new CardDisplay(this.Game.CurrentScreen) { Card = cardDisplay.Card }, CardRenderer.DefaultRenderSize, cardDisplay.ScreenPosition, CardMover.GetPlayerPosition(this.action.WinningPlayer.ID, CardRenderer.DefaultRenderSize)));
-                Console.WriteLine(CardMover.GetPlayerPosition(this.action.WinningPlayer.ID, CardRenderer.DefaultRenderSize));
             }
 
             trickDisplay.Stack = new CardStack();
@@ -70,7 +69,6 @@ namespace Doppelkopf.Client.Actors
                     
                 });
                 this.Done = true;
-                Console.WriteLine("Done");
             }            
         }
     }
