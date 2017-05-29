@@ -25,7 +25,11 @@ namespace Doppelkopf.Core.Actions
             this.WinningPlayer = game.CurrentRound.CurrentTrick.GetWinner();
             this.WinningPlayer.Tricks.Add(game.CurrentRound.CurrentTrick);
             game.CurrentRound.StartPlayer = this.WinningPlayer;
-            game.CurrentRound.CurrentTrick = new Trick();
+
+            game.CurrentRound.CheckOver();
+            if (!game.CurrentRound.IsOver) {
+                game.CurrentRound.CurrentTrick = new Trick();
+            }
         }
     }
 }

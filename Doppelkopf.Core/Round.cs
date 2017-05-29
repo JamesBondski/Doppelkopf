@@ -45,15 +45,9 @@ namespace Doppelkopf.Core {
             get; set;
         }
 
-        public bool IsRunning {
-            get {
-                return this.Players[0].Hand.Cards.Count() > 0;
-            }
-        }
-
         public Round(Game game, Player startPlayer = null) {
             this.Game = game;
-            this.deck = DeckBuilder.GetDoppelkopfDeck();
+            this.deck = new CardStack();
             this.Players = this.Game.Players;
             this.StartPlayer = startPlayer != null ? startPlayer : this.Players[0];
             this.CurrentTrick = new Trick();
@@ -61,8 +55,17 @@ namespace Doppelkopf.Core {
             this.Teams[Team.Kontra] = new List<Player>();
             this.Teams[Team.Re] = new List<Player>();
 
-            //Need to clear all tricks from the players when a new round starts
-            this.Players.ForEach(player => player.Tricks.Clear());
+            //Move all cards from Tricks and Hands to the deck
+            this.Players.ForEach(player => {
+                player.Tricks.ForEach(trick => trick.Cards.ToList().ForEach(card => card.MoveTo(this.deck)));
+                player.Tricks.Clear();
+                player.Hand.Cards.ToList().ForEach(card => card.MoveTo(this.deck));
+                });
+
+            //If we don't have enough cards (i.e. at the beginning of a game), get a new deck
+            if(this.deck.Cards.Count != 40) {
+                this.deck = DeckBuilder.GetDoppelkopfDeck();
+            }
 
             this.Deal();
         }
@@ -100,11 +103,9 @@ namespace Doppelkopf.Core {
             if (this.Action != null) {
                 this.Action(this, new ActionEventArgs() { Action = action, Round = this });
             }
-
-            CheckOver();
         }
 
-        private void CheckOver() {
+        public void CheckOver() {
             if (!this.IsOver && this.Players.All(player => player.Hand.Cards.Count == 0)) {
                 this.IsOver = true;
                 if (this.Over != null) {
@@ -114,14 +115,13 @@ namespace Doppelkopf.Core {
         }
 
         public void Play() {
-            while(IsRunning) {
+            while(!this.IsOver) {
                 PlayTrick();
             }
-            DoAction(new EndRoundAction());
         }
 
         public void PlayTrick() {
-            if(!this.IsRunning) {
+            if(this.IsOver) {
                 throw new RoundFinishedException();
             }
 
@@ -132,8 +132,10 @@ namespace Doppelkopf.Core {
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
                 this.Players[i].Play(this, this.CurrentTrick);
             }
-            
-            this.DoAction(new NewTrickAction());
+
+            if (!this.IsOver) {
+                this.DoAction(new NewTrickAction());
+            }
         }
     }
 

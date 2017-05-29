@@ -62,7 +62,7 @@ namespace Doppelkopf.Client.GameRunner
         }
 
         private void Run() {
-            this.Game.Play();
+            this.Game.Start();
         }
     }
 }

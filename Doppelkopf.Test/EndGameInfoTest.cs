@@ -15,8 +15,8 @@ namespace Doppelkopf.Test
         [TestInitialize]
         public void Init() {
             game = new Game();
+            game.Start(1);
             round = game.CurrentRound;
-            game.Play();
             info = round.End();
         }
 

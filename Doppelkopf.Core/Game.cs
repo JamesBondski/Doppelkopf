@@ -21,6 +21,10 @@ namespace Doppelkopf.Core
             }
         }
 
+        public int RoundsLeft {
+            get; set;
+        } = 10;
+
         private Round currentRound;
 
         public Game() {
@@ -28,26 +32,36 @@ namespace Doppelkopf.Core
             for (int i = 0; i < 4; i++) {
                 this.Players.Add(new Player() { Name = "Player " + i, ID = i });
             }
-
-            this.currentRound = new Round(this);
         }
 
-        public void Play() {
-            this.CurrentRound.Action += CurrentRound_Action;
-            this.CurrentRound.Play();
+        public void Start(int rounds = 1) {
+            this.RoundsLeft = rounds;
+
+            DoAction(new NewRoundAction());
         }
 
-        public void NewRound() {
+        public void NewRound(bool start = true) {
+            if (this.RoundsLeft == 0) {
+                return;
+            }
+            this.RoundsLeft--;
+
             //For now, while "Hochzeit" is not implemented, just repeat until we get a valid round
             do {
                 this.currentRound = new Round(this);
             } while (this.currentRound.Teams[Team.Kontra].Count != 2);
 
+            this.CurrentRound.Action += CurrentRound_Action;
             this.currentRound.Over += CurrentRound_Over;
+
+            if (start) {
+                this.CurrentRound.Play();
+            }
         }
 
         private void CurrentRound_Over(object sender, RoundEventArgs e) {
             DoAction(new EndRoundAction());
+            DoAction(new NewRoundAction());
         }
 
         private void DoAction(IAction action) {

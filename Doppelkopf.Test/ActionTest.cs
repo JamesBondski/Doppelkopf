@@ -11,6 +11,7 @@ namespace Doppelkopf.Test
         [TestMethod]
         public void TrickActions() {
             Game game = new Game();
+            game.NewRound(false);
             Trick trick = game.CurrentRound.CurrentTrick;
             game.CurrentRound.PlayTrick();
 
@@ -22,13 +23,6 @@ namespace Doppelkopf.Test
             Assert.IsInstanceOfType(game.CurrentRound.Actions[4], typeof(NewTrickAction));
 
             Assert.AreEqual(trick.GetWinner(), game.CurrentRound.StartPlayer);
-        }
-
-        [TestMethod]
-        public void EndRoundAction() {
-            Game game = new Game();
-            game.CurrentRound.Play();
-            Assert.IsInstanceOfType(game.CurrentRound.Actions[game.CurrentRound.Actions.Count - 1], typeof(EndRoundAction));
         }
     }
 }

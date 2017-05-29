@@ -12,6 +12,7 @@ namespace Doppelkopf.Test
         [TestMethod]
         public void PlayedTest() {
             Game game = new Game();
+            game.NewRound(false);
             Round round = game.CurrentRound;
             Trick trick = game.CurrentRound.CurrentTrick;
             Player player1 = game.Players[0];

@@ -14,6 +14,7 @@ namespace Doppelkopf.Test
         [TestInitialize]
         public void Setup() {
             game = new Game();
+            game.NewRound(false);
             round = game.CurrentRound;
         }
 
@@ -57,7 +58,7 @@ namespace Doppelkopf.Test
 
         [TestMethod]
         public void Round_TotalPoints() {
-            while(round.IsRunning) {
+            while(!round.IsOver) {
                 round.PlayTrick();
             }
             Assert.AreEqual(240, round.Players.Select(player => player.RoundPoints).Sum());
@@ -88,6 +89,7 @@ namespace Doppelkopf.Test
         [TestMethod]
         public void Round_Over() {
             Assert.IsFalse(eventRaised);
+            Assert.AreSame(round, game.CurrentRound);
             round.Over += Round_OverEvent;
             round.Play();
             Assert.IsTrue(eventRaised);
