@@ -81,5 +81,22 @@ namespace Doppelkopf.Test
                 }
             }
         }
+
+        bool eventRaised = false;
+        int callCount = 0;
+
+        [TestMethod]
+        public void Round_Over() {
+            Assert.IsFalse(eventRaised);
+            round.Over += Round_OverEvent;
+            round.Play();
+            Assert.IsTrue(eventRaised);
+            Assert.AreEqual(1, callCount);
+        }
+
+        private void Round_OverEvent(object sender, RoundEventArgs e) {
+            eventRaised = true;
+            callCount++;
+        }
     }
 }

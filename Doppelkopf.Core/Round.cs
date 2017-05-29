@@ -17,11 +17,16 @@ namespace Doppelkopf.Core {
             get;
         }
 
+        public bool IsOver {
+            get; set;
+        } = false;
+
         public Trick CurrentTrick {
             get; set;
         }
 
         public event EventHandler<ActionEventArgs> Action;
+        public event EventHandler<RoundEventArgs> Over;
 
         public List<IAction> Actions {
             get;
@@ -91,8 +96,19 @@ namespace Doppelkopf.Core {
         public void DoAction(IAction action) {
             action.Do(this.Game);
             this.Actions.Add(action);
-            if(this.Action != null) {
+            if (this.Action != null) {
                 this.Action(this, new ActionEventArgs() { Action = action, Round = this });
+            }
+
+            CheckOver();
+        }
+
+        private void CheckOver() {
+            if (!this.IsOver && this.Players.All(player => player.Hand.Cards.Count == 0)) {
+                this.IsOver = true;
+                if (this.Over != null) {
+                    this.Over(this, new RoundEventArgs() { Round = this });
+                }
             }
         }
 
@@ -121,9 +137,13 @@ namespace Doppelkopf.Core {
     }
 
 
-    public class ActionEventArgs : EventArgs
+    public class ActionEventArgs : RoundEventArgs
     {
         public IAction Action { get; set; }
+    }
+
+    public class RoundEventArgs : EventArgs
+    {
         public Round Round { get; set; }
     }
 
