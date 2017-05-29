@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Doppelkopf.Core.Actions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,19 @@ namespace Doppelkopf.Core
             do {
                 this.currentRound = new Round(this);
             } while (this.currentRound.Teams[Team.Kontra].Count != 2);
+
+            this.currentRound.Over += CurrentRound_Over;
+        }
+
+        private void CurrentRound_Over(object sender, RoundEventArgs e) {
+            DoAction(new EndRoundAction());
+        }
+
+        private void DoAction(IAction action) {
+            action.Do(this);
+            if (this.Action != null) {
+                this.Action(this, new ActionEventArgs() { Round = this.CurrentRound, Action = action });
+            }
         }
 
         private void CurrentRound_Action(object sender, ActionEventArgs e) {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Doppelkopf.Client.GUI;
+using Doppelkopf.Core.Actions;
 
 namespace Doppelkopf.Client.Actors
 {

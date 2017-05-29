@@ -7,6 +7,7 @@ using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Doppelkopf.Client.GUI;
 using Doppelkopf.Client.GameRunner;
+using Doppelkopf.Core.Actions;
 
 namespace Doppelkopf.Client.Actors
 {

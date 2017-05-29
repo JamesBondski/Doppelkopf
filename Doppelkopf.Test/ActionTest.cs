@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Doppelkopf.Core;
+using Doppelkopf.Core.Actions;
 
 namespace Doppelkopf.Test
 {
