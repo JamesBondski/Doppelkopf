@@ -21,6 +21,7 @@ namespace Doppelkopf.Core.Actions
         public void Do(Game game) {
             this.endedRound = game.CurrentRound;
             this.endedRound.End();
+            game.PreviousRounds.Add(this.endedRound);
         }
     }
 }

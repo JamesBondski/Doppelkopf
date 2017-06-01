@@ -21,6 +21,10 @@ namespace Doppelkopf.Core
             }
         }
 
+        public List<Round> PreviousRounds {
+            get;
+        } = new List<Round>();
+
         public int RoundsLeft {
             get; set;
         } = 10;
