@@ -7,11 +7,14 @@ using Doppelkopf.Core;
 using Microsoft.Xna.Framework;
 using Doppelkopf.Client.GUI;
 using Doppelkopf.Core.Actions;
+using NLog;
 
 namespace Doppelkopf.Client.Actors
 {
     public class EndTrickActor : IActionActor
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         EndTrickAction action;
         public IAction Action {
             get {
@@ -42,6 +45,7 @@ namespace Doppelkopf.Client.Actors
                 FontName = "Arial18",
                 Area = new Rectangle((int)(Game.GraphicsDevice.Viewport.Width / 2 - textDim.X / 2), Game.GraphicsDevice.Viewport.Height - 250, (int)textDim.X, (int)textDim.Y)
             };
+            logger.Debug("Click to continue initialized.");
         }
 
         private void Input_MouseDown(object sender, Input.MouseEventArgs e) {
@@ -56,6 +60,7 @@ namespace Doppelkopf.Client.Actors
             trickDisplay.StartPlayer = this.action.WinningPlayer.ID;
             
             label.Parent.Children.Remove(label);
+            logger.Debug(movers.Count + " Movers started.");
         }
 
         public void Update(GameTime gameTime) {
@@ -67,8 +72,8 @@ namespace Doppelkopf.Client.Actors
                 movers.ToList().ForEach(mover => {
                     this.Game.CurrentScreen.Children.Remove(mover.Display);
                     movers.Remove(mover);
-                    
                 });
+                logger.Debug("Movers done. EndTrick handled.");
                 this.Done = true;
             }            
         }

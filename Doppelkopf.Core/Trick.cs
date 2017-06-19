@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Doppelkopf.Core
 {
     public class Trick : CardStack
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         List<Tuple<Player, Card>> PlayedCards {
             get; set;
         }
@@ -54,10 +57,12 @@ namespace Doppelkopf.Core
 
             //Check if this card was playable
             if(!previousStack.Owner.Hand.GetPlayableCards(this).Contains(card)) {
+                logger.Debug("Invalid card played to trick: " + card.Symbol);
                 throw new InvalidCardPlayedException("Card does not match suit.");
             }
 
             PlayedCards.Add(new Tuple<Player, Card>(previousStack.Owner, card));
+            logger.Debug("Card " + card.Symbol + " added to trick.");
             base.AddCard(card);
         }
     }

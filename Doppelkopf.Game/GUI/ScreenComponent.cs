@@ -1,6 +1,7 @@
 ﻿using Doppelkopf.Client.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Doppelkopf.Client.GUI
 {
     public abstract class ScreenComponent
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public ScreenComponent Parent {
             get; set;
         }
@@ -95,6 +98,7 @@ namespace Doppelkopf.Client.GUI
             if (isInArea) {
                 //Click begun
                 if (this.Click != null && !handledByChild && args.EventType == MouseEventType.Down && args.Button == MouseButton.Left && this.ScreenArea.Contains(args.CurrentPosition)) {
+                    logger.Debug("Click begun...");
                     this.clickInProgress = true;
                 }
             }
@@ -103,6 +107,7 @@ namespace Doppelkopf.Client.GUI
                 //Click over, successful only if inside
                 clickInProgress = false;
                 if (isInArea && !handledByChild && this.Click != null) {
+                    logger.Debug("Click!");
                     this.Click(this, args);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using Doppelkopf.Core.Actions;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace Doppelkopf.Core {
     }
 
     public class Round {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         CardStack deck;
         Game Game {
             get;
@@ -64,6 +67,7 @@ namespace Doppelkopf.Core {
 
             //If we don't have enough cards (i.e. at the beginning of a game), get a new deck
             if(this.deck.Cards.Count != 40) {
+                logger.Debug("Getting new deck..");
                 this.deck = DeckBuilder.GetDoppelkopfDeck();
             }
 
@@ -107,6 +111,7 @@ namespace Doppelkopf.Core {
 
         public void CheckOver() {
             if (!this.IsOver && this.Players.All(player => player.Hand.Cards.Count == 0)) {
+                logger.Debug("Round is over.");
                 this.IsOver = true;
                 if (this.Over != null) {
                     this.Over(this, new RoundEventArgs() { Round = this });
@@ -127,9 +132,11 @@ namespace Doppelkopf.Core {
 
             Queue<Player> trickQueue = new Queue<Player>();
             for(int i=this.Players.IndexOf(this.StartPlayer); i<4; i++) {
+                logger.Debug("Player " + i + " turn.");
                 this.Players[i].Play(this, this.CurrentTrick);
             }
             for (int i = 0; i<this.Players.IndexOf(this.StartPlayer); i++) {
+                logger.Debug("Player " + i + " turn.");
                 this.Players[i].Play(this, this.CurrentTrick);
             }
 
