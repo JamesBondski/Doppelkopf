@@ -14,18 +14,10 @@ namespace Doppelkopf.Core.Actions
             }
         }
 
-        public Player WinningPlayer {
-            get; set;
-        }
-
         public NewTrickAction() {
         }
 
         public void Do(Game game) {
-            this.WinningPlayer = game.CurrentRound.CurrentTrick.GetWinner();
-            this.WinningPlayer.Tricks.Add(game.CurrentRound.CurrentTrick);
-            game.CurrentRound.StartPlayer = this.WinningPlayer;
-
             game.CurrentRound.CheckOver();
             if (!game.CurrentRound.IsOver) {
                 game.CurrentRound.CurrentTrick = new Trick();

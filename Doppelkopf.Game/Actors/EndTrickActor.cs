@@ -10,9 +10,9 @@ using Doppelkopf.Core.Actions;
 
 namespace Doppelkopf.Client.Actors
 {
-    public class NewTrickActor : IActionActor
+    public class EndTrickActor : IActionActor
     {
-        NewTrickAction action;
+        EndTrickAction action;
         public IAction Action {
             get {
                 return action;
@@ -30,8 +30,8 @@ namespace Doppelkopf.Client.Actors
         Label label;
         List<CardMover> movers = new List<CardMover>();
 
-        public NewTrickActor(DoppelkopfGame game, IAction action) {
-            this.action = (NewTrickAction)action;
+        public EndTrickActor(DoppelkopfGame game, IAction action) {
+            this.action = (EndTrickAction)action;
             this.Game = game;
             game.Input.MouseDown += Input_MouseDown;
 

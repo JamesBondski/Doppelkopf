@@ -37,7 +37,7 @@ namespace Doppelkopf.Client.Actors
             display.Card = this.action.Card;
 
             Point startPosition = CardMover.GetPlayerPosition(this.action.Player.ID, CardRenderer.DefaultRenderSize);
-            if (this.action.Player.ID == 0) {
+            if (this.action.Player.ID == 0 && this.action.Player.Actor is ClientActor) {
                 //For player card, use the actual start position
                 startPosition = (this.action.Player.Actor as ClientActor).LastPlayedCardPosition;
             }

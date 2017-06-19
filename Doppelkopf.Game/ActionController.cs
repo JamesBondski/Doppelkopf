@@ -42,10 +42,14 @@ namespace Doppelkopf.Client
                 case "PlayCard":
                     this.CurrentActor = new Actors.PlayCardActor(this.Game as DoppelkopfGame, currentAction);
                     break;
-                case "NewTrick":
-                    this.CurrentActor = new Actors.NewTrickActor(this.Game as DoppelkopfGame, currentAction);
+                case "EndTrick":
+                    this.CurrentActor = new Actors.EndTrickActor(this.Game as DoppelkopfGame, currentAction);
+                    break;
+                case "NewRound":
+                    this.CurrentActor = new Actors.NewRoundActor(this.Game as DoppelkopfGame, currentAction);
                     break;
                 default:
+                    Console.WriteLine("Unhandled Action:  " + currentAction.Name);
                     this.currentAction = null;
                     (this.Game as DoppelkopfGame).Runner.ActionHandled.Set();
                     break;

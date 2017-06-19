@@ -134,6 +134,7 @@ namespace Doppelkopf.Core {
             }
 
             if (!this.IsOver) {
+                this.DoAction(new EndTrickAction());
                 this.DoAction(new NewTrickAction());
             }
         }
